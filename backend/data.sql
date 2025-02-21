@@ -1,0 +1,2 @@
+CREATE DATABASE flashcards
+USE flashcards
