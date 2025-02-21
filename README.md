@@ -14,12 +14,14 @@ AI flashcard making?!?!
 
 Digital quizzing using flashcards
 Add feature to hide certain aspects/words of flashcards
+Feature to create shapes which conseal parts of image (can be clicked to reveal hidden parts)
+Feature to screen capture and port directly into a flashcard
 
 ### B/E 
 (considering this is a single user platform)
 in db:
 	flashcard table (id, name, content, deckID, date created, date last modified)
- 	decks table (id, name, flashcards contained, decks contained)
+ 	decks table (id, name, flashcards contained, decks contained, date created, date last modified)
 
 
 #### Decks
