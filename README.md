@@ -24,6 +24,8 @@ in db:
 - flashcard table (id, name, content, tags, deckID, date created, date last modified)
 - decks table (id, name, flashcards contained, decks contained, date created, date last modified)
 
+<br>
+
 - f.id: flashcard ID, used for reference in db
 - f.name: name of flashcard
 - f.content: front and back of flashcard, (stored in json format, each element in json array is a side of the flashcard) 
