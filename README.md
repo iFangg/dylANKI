@@ -1,4 +1,4 @@
-# dylan_ANKI
+# dylANKI
 Happy Birthday Dylan :)
 
 ## This is a flashcard app
