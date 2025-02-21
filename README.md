@@ -3,7 +3,7 @@ Happy Birthday Dylan :)
 
 ## This is a flashcard app
 
-### F/E
+### F/E - react
 - flashcard management
 - flashcard viewing
 - flashcard editing
@@ -17,7 +17,7 @@ AI flashcard making?!?!
 - Feature to create shapes which conseal parts of image (can be clicked to reveal hidden parts)
 - Feature to screen capture and port directly into a flashcard
 
-### B/E 
+### B/E - mysql/mariadb, node.js
 (considering this is a single user platform)
 
 in db:
