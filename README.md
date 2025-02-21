@@ -4,11 +4,11 @@ Happy Birthday Dylan :)
 ## This is a flashcard app
 
 ### F/E
-flashcard management
-flashcard viewing
-flashcard editing
-flashcard printing
-deck management
+- flashcard management
+- flashcard viewing
+- flashcard editing
+- flashcard printing
+- deck management
 
 AI flashcard making?!?!
 
