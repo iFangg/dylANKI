@@ -2,7 +2,7 @@
 Happy Birthday Dylan :)
 
 ## This is a flashcard app
-Figma is [here](https://www.figma.com/design/PRTrejREzkCT7fXRqwnA1U/DylANKI?node-id=10-254&p=f&t=Wxq4HUnu1sg5uzG5-0)
+Figma is [here](https://www.figma.com/design/PRTrejREzkCT7fXRqwnA1U/DylANKI?node-id=0-1&p=f&t=Wxq4HUnu1sg5uzG5-0)
 
 ### F/E - react, tailwind css/shadecn
 - flashcard management
