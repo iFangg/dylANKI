@@ -1,4 +1,6 @@
 import Image from "next/image";
+import "../db/queries";
+import { TestButton } from "./components/TestButton";
 
 export default function Home() {
   return (
@@ -22,6 +24,9 @@ export default function Home() {
           </li>
           <li>Save and see your changes instantly!</li>
         </ol>
+        <div>
+          <TestButton />
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
@@ -32,8 +37,8 @@ export default function Home() {
           >
             <Image
               className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
+              src="/cross.svg"
+              alt="ERR WRONG"
               width={20}
               height={20}
             />
