@@ -28,16 +28,16 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { name, content } = await req.json();
+    const { name } = await req.json();
     const conn = await pool.getConnection();
     await conn.query(
-      "INSERT INTO Flashcards (name, content) VALUES (?, ?)",
-      [name, content]
+      "INSERT INTO Decks (name) VALUES (?)",
+      [name]
     );
     conn.release();
-    return NextResponse.json({ message: "Flashcard added" });
+    return NextResponse.json({ message: "Deck added" });
   } catch (error) {
     console.error("DB Insert error: ", error);
-    return NextResponse.json({ error: "Flashcard Insertion failed" }, { status: 500 });
+    return NextResponse.json({ error: "Deck Insertion failed" }, { status: 500 });
   }
 }
