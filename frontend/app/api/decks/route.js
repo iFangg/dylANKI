@@ -50,34 +50,35 @@ export async function POST(req) {
 
 export async function UPDATE(req) {
   try {
-    const { flashcardID, name, content } = await req.json();
+    const { deckID, name } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "UPDATE Flashcards SET Name = ?, Content = ? WHERE ID = ?;",
-      [name, content, flashcardID]
+      "UPDATE Decks SET Name = ? WHERE ID = ?;",
+      [name, deckID]
     );
     conn.release();
-    return NextResponse.json({ message: "Flashcard updated" });
+    return NextResponse.json({ message: "Deck updated" });
   } catch (error) {
-    console.error("Flashcard update error: ", error);
-    return NextResponse.json({ error: "Flashcard update failed" }, { status: 500 });
+    console.error("Deck update error: ", error);
+    return NextResponse.json({ error: "Deck  update failed" }, { status: 500 });
   }
 }
 
 export async function DELETE(req) {
   try {
-    const { flashcardID } = await req.json();
+    const { deckID } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "DELETE FROM Flashcards WHERE ID = ?;",
-      [flashcardID]
+      "DELETE FROM Decks WHERE ID = ?;",
+      [deckID]
     );
+    // edit table and variable names
     deletion = await conn.query(
-      "DELETE FROM Decks WHERE ID = (SELECT ID FROM Flashcards WHERE ID = ?);",
-      [flashcardID]
+      "DELETE FROM CardInDeck WHERE ID = (SELECT ID FROM Flashcards WHERE ID = ?);",
+      [deckID]
     );
   } catch (error) {
-    console.error("Flashcard update error: ", error);
-    return NextResponse.json({ error: "Flashcard update failed" }, { status: 500 });
+    console.error("Deck deletion error: ", error);
+    return NextResponse.json({ error: "Deck deletion failed" }, { status: 500 });
   }
 }

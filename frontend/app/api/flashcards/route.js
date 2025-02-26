@@ -75,7 +75,7 @@ export async function DELETE(req) {
       [flashcardID]
     );
   } catch (error) {
-    console.error("Flashcard update error: ", error);
-    return NextResponse.json({ error: "Flashcard update failed" }, { status: 500 });
+    console.error("Flashcard delete error: ", error);
+    return NextResponse.json({ error: "Flashcard deletion failed" }, { status: 500 });
   }
 }
