@@ -1,6 +1,7 @@
 import Image from "next/image";
 import "../db/queries";
 import { TestButton } from "./components/TestButton";
+import { AddFlashcard, AddFlashcardButton } from "./components/AddFlashcard";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         </ol>
         <div>
           <TestButton />
+          <AddFlashcardButton />
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">

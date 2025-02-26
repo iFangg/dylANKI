@@ -28,7 +28,7 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { deckID, name, content } = await req.json();
+    const { action = null, deckID, name, content } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
       "INSERT INTO Flashcards (name, content) VALUES (?, ?)",
