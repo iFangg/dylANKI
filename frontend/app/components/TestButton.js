@@ -12,7 +12,7 @@ export function TestButton() {
         setData(data);
         console.log(res);
     } catch (err) {
-        console.log("Error getting flashcards: ", err)
+        console.log("Error getting flashcards: ", err);
     }
   };
 

@@ -16,7 +16,7 @@ console.log(`connecting to ${process.env.DB_HOSTNAME} as user ${process.env.DB_U
 export async function GET() {
   try {
     const conn = await pool.getConnection();
-    const results = await conn.query("SHOW TABLES;");
+    const results = await conn.query("SELECT * FROM Decks;");
     console.log(results)
     conn.release();
     return NextResponse.json(results);
@@ -28,12 +28,18 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { name } = await req.json();
+    const { deckID = null, name } = await req.json();
     const conn = await pool.getConnection();
-    await conn.query(
+    result = await conn.query(
       "INSERT INTO Decks (name) VALUES (?)",
       [name]
     );
+    if (deckID != null) {
+        await conn.query(
+            "INSERT INTO DeckInDeck (DeckID, SuperDeckID) VALUES (?, ?)",
+            [result.ID, deckID]
+        );
+    }
     conn.release();
     return NextResponse.json({ message: "Deck added" });
   } catch (error) {

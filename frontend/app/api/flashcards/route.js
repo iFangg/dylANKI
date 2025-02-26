@@ -28,12 +28,16 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { name, content } = await req.json();
+    const { deckID, name, content } = await req.json();
     const conn = await pool.getConnection();
-    await conn.query(
+    result = await conn.query(
       "INSERT INTO Flashcards (name, content) VALUES (?, ?)",
       [name, content]
-    );
+    );  
+    await conn.query(
+      "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?)",
+      [result.ID, deckID]
+    )
     conn.release();
     return NextResponse.json({ message: "Flashcard added" });
   } catch (error) {
