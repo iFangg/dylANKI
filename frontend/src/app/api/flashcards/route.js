@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import mariadb from "mariadb"
-import '../../../db/queries'
+import '../../../../db/queries'
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOSTNAME,
@@ -16,7 +16,7 @@ console.log(`connecting to ${process.env.DB_HOSTNAME} as user ${process.env.DB_U
 export async function GET() {
   try {
     const conn = await pool.getConnection();
-    const results = await conn.query("SELECT * FROM Decks;");
+    const results = await conn.query("SHOW TABLES;");
     console.log(results)
     conn.release();
     return NextResponse.json(results);
@@ -28,57 +28,54 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { action = null, deckID = null, name } = await req.json();
+    const { action = null, deckID, name, content } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "INSERT INTO Decks (name) VALUES (?)",
-      [name]
-    );
-    if (deckID != null) {
-        await conn.query(
-            "INSERT INTO DeckInDeck (DeckID, SuperDeckID) VALUES (?, ?)",
-            [result.ID, deckID]
-        );
-    }
+      "INSERT INTO Flashcards (name, content) VALUES (?, ?);",
+      [name, content]
+    );  
+    await conn.query(
+      "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",
+      [result.ID, deckID]
+    )
     conn.release();
-    return NextResponse.json({ message: "Deck added" });
+    return NextResponse.json({ message: "Flashcard added" });
   } catch (error) {
     console.error("DB Insert error: ", error);
-    return NextResponse.json({ error: "Deck Insertion failed" }, { status: 500 });
+    return NextResponse.json({ error: "Flashcard Insertion failed" }, { status: 500 });
   }
 }
 
 export async function UPDATE(req) {
   try {
-    const { deckID, name } = await req.json();
+    const { flashcardID, name, content } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "UPDATE Decks SET Name = ? WHERE ID = ?;",
-      [name, deckID]
+      "UPDATE Flashcards SET Name = ?, Content = ? WHERE ID = ?;",
+      [name, content, flashcardID]
     );
     conn.release();
-    return NextResponse.json({ message: "Deck updated" });
+    return NextResponse.json({ message: "Flashcard updated" });
   } catch (error) {
-    console.error("Deck update error: ", error);
-    return NextResponse.json({ error: "Deck  update failed" }, { status: 500 });
+    console.error("Flashcard update error: ", error);
+    return NextResponse.json({ error: "Flashcard update failed" }, { status: 500 });
   }
 }
 
 export async function DELETE(req) {
   try {
-    const { deckID } = await req.json();
+    const { flashcardID } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "DELETE FROM Decks WHERE ID = ?;",
-      [deckID]
+      "DELETE FROM Flashcards WHERE ID = ?;",
+      [flashcardID]
     );
-    // edit table and variable names
     deletion = await conn.query(
-      "DELETE FROM CardInDeck WHERE ID = (SELECT ID FROM Flashcards WHERE ID = ?);",
-      [deckID]
+      "DELETE FROM Decks WHERE ID = (SELECT ID FROM Flashcards WHERE ID = ?);",
+      [flashcardID]
     );
   } catch (error) {
-    console.error("Deck deletion error: ", error);
-    return NextResponse.json({ error: "Deck deletion failed" }, { status: 500 });
+    console.error("Flashcard delete error: ", error);
+    return NextResponse.json({ error: "Flashcard deletion failed" }, { status: 500 });
   }
 }

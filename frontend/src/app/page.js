@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "../db/queries";
+import "../../db/queries";
 import { TestButton } from "./components/TestButton";
 import { AddFlashcard, AddFlashcardButton } from "./components/AddFlashcard";
 
@@ -39,7 +39,7 @@ export default function Home() {
           >
             <Image
               className="dark:invert"
-              src="/cross.svg"
+              src="/vercel.svg"
               alt="ERR WRONG"
               width={20}
               height={20}
