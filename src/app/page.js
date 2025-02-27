@@ -1,7 +1,7 @@
 import Image from "next/image";
 import "../../db/queries";
 import { TestButton } from "./components/TestButton";
-import { AddFlashcard, AddFlashcardButton } from "./components/AddFlashcard";
+import { AddFlashcardButton } from "./components/AddFlashcard";
 
 export default function Home() {
   return (
