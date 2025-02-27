@@ -28,11 +28,11 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { action = null, deckID, name, content } = await req.json();
+    const { action = null, deckID, name, content, dateC, dateLM } = await req.json();
     const conn = await pool.getConnection();
     result = await conn.query(
-      "INSERT INTO Flashcards (name, content) VALUES (?, ?);",
-      [name, content]
+      "INSERT INTO Flashcards (name, content, dateCreated, dateLastModified) VALUES (?, ?, ?, ?);",
+      [name, content, dateC, dateLM]
     );  
     await conn.query(
       "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",

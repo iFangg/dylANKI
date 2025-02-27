@@ -3,6 +3,7 @@ import "../../db/queries";
 import { TestButton } from "../components/ui/TestButton";
 import { AddFlashcardButton } from "../components/ui/AddFlashcard";
 import Navbar from "@/components/sections/navbar/default";
+import { AddDeckButton } from "@/components/ui/AddDeck";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
         <div>
           <TestButton />
           <AddFlashcardButton />
+          <AddDeckButton />
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
