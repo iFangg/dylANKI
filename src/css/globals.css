@@ -8,6 +8,9 @@
     --foreground: #ededed;
   }
 }
+main{
+    margin-top: 10px;
+}
 
 img {
   width: 100px; /* or any specific width */
