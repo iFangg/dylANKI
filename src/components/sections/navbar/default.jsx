@@ -17,10 +17,10 @@ export default function Navbar() {
       <div className="relative mx-auto max-w-container">
         <NavbarComponent>
           <NavbarLeft>
-            <a href="/" className="flex items-center gap-2 text-xl font-bold">
+            {/* <a href="/" className="flex items-center gap-2 text-xl font-bold">
               <LaunchUI />
               Launch UI
-            </a>
+            </a> */}
             <Navigation />
           </NavbarLeft>
           <NavbarRight>
