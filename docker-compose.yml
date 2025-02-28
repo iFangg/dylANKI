@@ -1,53 +1,38 @@
-version: "3.8"
-# edit
 services:
-  database:
-    image: mariadb:latest
-    container_name: mariadb_container
-    restart: always
-    environment:
-      MYSQL_HOST: localhost
-      MYSQL_ROOT_PASSWORD: ''
-      MYSQL_DATABASE: dylanki
-      MYSQL_USER: root
-      MYSQL_PASSWORD: ''
-    ports:
-      - "3306:3306"
-    volumes:
-      - mariadb_data:/var/lib/mysql
-
-  backend:
+  # Next.js application
+  nextjs:
     build:
-      context: ./src
-      dockerfile: ../Dockerfile.db
-    container_name: nextjs_backend
-    restart: always
-    environment:
-      DATABASE_HOST: loaclhost
-      DATABASE_USER: root
-      DATABASE_PASSWORD: ''
-      DATABASE_NAME: dylanki
-    depends_on:
-      - database
-    ports:
-      - "3001:3001"
-    volumes:
-      - ./src:/app
-      - ./src/app/node_modules
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.frontend
-    container_name: react_frontend
-    restart: always
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - DATABASE_URL=mysql://root@db:3306/myapp
     depends_on:
-      - backend
+      - db
+    networks:
+      - app-network
+
+  # MariaDB service
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
-  mariadb_data:
+  db-data:
