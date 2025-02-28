@@ -1,8 +1,8 @@
-FROM mariadb
+FROM mariadb:11.7
 
-COPY data.sql /docker-entrypoint-initdb.d/
+COPY ./db/data.sql /docker-entrypoint-initdb.d/
 
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MARIADB_ROOT_PASSWORD=root
+ENV MYSQL_ROOT_PASSWORD=''
+ENV MARIADB_ROOT_PASSWORD=''
 
 EXPOSE 3306

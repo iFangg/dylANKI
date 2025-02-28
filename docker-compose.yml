@@ -6,10 +6,11 @@ services:
     container_name: mariadb_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_HOST: localhost
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: dylanki
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ''
     ports:
       - "3306:3306"
     volumes:
@@ -17,22 +18,22 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile.backend
+      context: ./src
+      dockerfile: ../Dockerfile.db
     container_name: nextjs_backend
     restart: always
     environment:
-      DATABASE_HOST: database
-      DATABASE_USER: myuser
-      DATABASE_PASSWORD: mypassword
-      DATABASE_NAME: mydatabase
+      DATABASE_HOST: loaclhost
+      DATABASE_USER: root
+      DATABASE_PASSWORD: ''
+      DATABASE_NAME: dylanki
     depends_on:
       - database
     ports:
       - "3001:3001"
     volumes:
-      - ./backend:/app
-      - /app/node_modules
+      - ./src:/app
+      - ./src/app/node_modules
 
   frontend:
     build:
