@@ -4,5 +4,6 @@ COPY ./db/data.sql /docker-entrypoint-initdb.d/
 
 ENV MYSQL_ROOT_PASSWORD=''
 ENV MARIADB_ROOT_PASSWORD=''
+ENV MYSQL_DATABASE=dylanki
 
-EXPOSE 3306
+EXPOSE 3307

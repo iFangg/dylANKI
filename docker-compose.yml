@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=mysql://root@db:3306/myapp
+      - DATABASE_URL=mysql://root@db:3307/myapp
     depends_on:
       - db
     networks:
@@ -15,13 +15,12 @@ services:
 
   # MariaDB service
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile.db
-    volumes:
-      - db-data:/var/lib/mysql
+    image: mariadb:latest
+    restart: always
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"  # Allows root login without a password
     ports:
-      - "3306:3306"
+      - "3307:3307"
     networks:
       - app-network
     healthcheck:
@@ -29,10 +28,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - db_data:/var/lib/mysql
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
-  db-data:
+  db_data:
