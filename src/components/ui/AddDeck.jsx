@@ -15,9 +15,7 @@ export function AddDeckButton() {
                 body: JSON.stringify({
                     action: null,
                     deckID: null,
-                    name: "Test deck",
-                    DateCreated: Date.now(),
-                    DateLastModified: Date.now()
+                    name: "Test deck"
                 })
             }
         );

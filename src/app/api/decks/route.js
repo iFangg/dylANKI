@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import mariadb from "mariadb"
-import '../../../../db/queries'
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOSTNAME,
@@ -29,10 +28,11 @@ export async function GET() {
 export async function POST(req) {
   try {
     const { action = null, deckID = null, name } = await req.json();
+    const now = Date.now()
     const conn = await pool.getConnection();
     result = await conn.query(
-      "INSERT INTO Decks (name) VALUES (?)",
-      [name]
+      "INSERT INTO Decks (name, dateCreated, dateLastModified) VALUES (?, ?, ?)",
+      [name, now, dateLastModified]
     );
     if (deckID != null) {
         await conn.query(

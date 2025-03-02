@@ -20,9 +20,7 @@ export function AddFlashcardButton() {
                         front: "This is the front",
                         back:"This is the back"
                     },
-                    tags: null,
-                    DateCreated: Date.now(),
-                    DateLastModified: Date.now()
+                    tags: null
                 })
             }
         );
