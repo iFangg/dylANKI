@@ -24,5 +24,6 @@ font-weight: bold;
 
 /* Change the background color on mouse-over */
 .header a:hover {
+    box-shadow: white;
 color: rgb(255, 162, 162);
 }
