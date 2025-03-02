@@ -9,6 +9,9 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 import { Menu } from "lucide-react";
 import LaunchUI from "../../logos/launch-ui";
+import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -25,10 +28,12 @@ export default function Navbar() {
             <Navigation />
           </NavbarLeft>
           <NavbarCenter>
-            <a href="/" className="hidden text-sm md:block">
-              Testing
-            </a>
-          </NavbarCenter>
+            <Link href="/" legacyBehavior passHref>
+              <a className={navigationMenuTriggerStyle()}>
+                Testing
+              </a>
+            </Link>
+         </NavbarCenter>
           <NavbarRight>
             <a href="/" className="hidden text-sm md:block">
               Sign in
