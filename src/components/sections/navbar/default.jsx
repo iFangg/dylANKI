@@ -1,15 +1,15 @@
-import Navigation from "../../ui/navigation";
-import { Button } from "../../ui/button";
+// import Navigation from "../../ui/navigation";
+// import { Button } from "../../ui/button";
+// import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
+// import { Menu } from "lucide-react";
+// import LaunchUI from "../../logos/launch-ui";
+// import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import {
   NavbarCenter,
   Navbar as NavbarComponent,
   NavbarLeft,
   NavbarRight,
 } from "../../ui/navbar";
-import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
-import { Menu } from "lucide-react";
-import LaunchUI from "../../logos/launch-ui";
-import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 
@@ -24,21 +24,28 @@ export default function Navbar() {
             {/* <a href="/" className="flex items-center gap-2 text-xl font-bold">
               <LaunchUI />
               Launch UI
-            </a> */}
-            <Navigation />
+            </a>
+            <Navigation /> */}
+             <Link href="/decklist" legacyBehavior passHref>
+              <a className={navigationMenuTriggerStyle()}>
+                Deck List
+              </a>
+            </Link>
           </NavbarLeft>
           <NavbarCenter>
             <Link href="/" legacyBehavior passHref>
               <a className={navigationMenuTriggerStyle()}>
-                Testing
+                Home
               </a>
             </Link>
          </NavbarCenter>
           <NavbarRight>
-            <a href="/" className="hidden text-sm md:block">
-              Sign in
-            </a>
-            <Button variant="default" asChild>
+            <Link href="/quiz" legacyBehavior passHref>
+              <a className={navigationMenuTriggerStyle()}>
+                Quizzing
+              </a>
+            </Link>
+            {/* <Button variant="default" asChild>
               <a href="/">Get Started</a>
             </Button>
             <Sheet>
@@ -64,7 +71,7 @@ export default function Navbar() {
                   </a>
                 </nav>
               </SheetContent>
-            </Sheet>
+            </Sheet> */}
           </NavbarRight>
         </NavbarComponent>
       </div>
