@@ -21,15 +21,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <header className="header w-full fixed">
-        <div className="container mx-auto">
-          <Navbar className="w-full"/>
-        </div>
-      </header>
+    <html lang="en" className="hydrated">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        cz-shortcut-listen="true"
       >
+        <header className="header w-full fixed">
+          <div className="container mx-auto">
+            <Navbar className="w-full"/>
+          </div>
+        </header>
         {children}
       </body>
     </html>

@@ -4,6 +4,8 @@
 // import { Menu } from "lucide-react";
 // import LaunchUI from "../../logos/launch-ui";
 // import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
+"use client"
+
 import {
   NavbarCenter,
   Navbar as NavbarComponent,
@@ -11,9 +13,12 @@ import {
   NavbarRight,
 } from "../../ui/navbar";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const route = useRouter();
   return (
     <header className="sticky top-0 z-50 -mb-4 px-4 pb-4">
       {/* <div
@@ -26,16 +31,33 @@ export default function Navbar() {
               Launch UI
             </a>
             <Navigation /> */}
-             <Link href="/decklist" legacyBehavior passHref>
-              <a className={navigationMenuTriggerStyle()}>
+             {/* <Link href="/decklist" legacyBehavior passHref>
+              <a className={navigationMenuTriggerStyle({ className: '' })}>
                 Deck List
               </a>
+            </Link> */}
+            {/* fix hover issue (goes away after one click)*/}
+            <Link href="/decklist" className={navigationMenuTriggerStyle()}>
+              Deck List
             </Link>
           </NavbarLeft>
           <NavbarCenter>
             <Link href="/" legacyBehavior passHref>
               <a className={navigationMenuTriggerStyle()}>
-                Home
+                <div className="flex flex-col">
+                  <Image
+                    className="dark:invert"
+                    src="/home.svg"
+                    alt="Next.js logo"
+                    width={90}
+                    height={17}
+                    style={{width: "50px", height:"50px"}}
+                    priority
+                  />
+                  <div>
+                    Home
+                  </div>
+                </div>
               </a>
             </Link>
          </NavbarCenter>

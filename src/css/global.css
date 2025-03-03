@@ -18,6 +18,10 @@ img {
   height: 100px; /* this will maintain the aspect ratio */
 }
 
+.main-page {
+  white-space: 10px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
