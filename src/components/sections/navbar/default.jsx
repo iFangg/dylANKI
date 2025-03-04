@@ -38,34 +38,62 @@ export default function Navbar() {
             </Link> */}
             {/* fix hover issue (goes away after one click)*/}
             <Link href="/decklist" className={navigationMenuTriggerStyle()}>
-              Deck List
+              <div className="flex flex-col" id="parent">
+                <div id="child1" className="block center">
+                  <Image
+                    className="dark:invert"
+                    src="/decks.svg"
+                    alt="Deck List logo"
+                    width={50}
+                    height={50}
+                    style={{width: "50px", height:"50px"}}
+                    priority
+                  />
+                </div>
+                <div id="child2" className="block center">  
+                  Deck List
+                </div>
+              </div>
             </Link>
           </NavbarLeft>
           <NavbarCenter>
-            <Link href="/" legacyBehavior passHref>
-              <a className={navigationMenuTriggerStyle()}>
-                <div className="flex flex-col">
+            <Link href="/" className={navigationMenuTriggerStyle()}>
+              <div className="flex flex-col" id="parent">
+                <div id="child1" className="flex flex-col center">
                   <Image
                     className="dark:invert"
                     src="/home.svg"
-                    alt="Next.js logo"
+                    alt="Home logo"
                     width={90}
                     height={17}
                     style={{width: "50px", height:"50px"}}
                     priority
                   />
-                  <div>
+                  <div id="child2" className="block center">
                     Home
                   </div>
                 </div>
-              </a>
+              </div>
             </Link>
          </NavbarCenter>
           <NavbarRight>
-            <Link href="/quiz" legacyBehavior passHref>
-              <a className={navigationMenuTriggerStyle()}>
-                Quizzing
-              </a>
+            <Link href="/quiz" className={navigationMenuTriggerStyle()}>
+              <div className="flex flex-col" id="parent">
+                <div id = "child1" className="flex flex-col center">
+                  <Image
+                    className="dark:invert"
+                    src="/quiz.svg"
+                    alt="Quiz logo"
+                    width={50}
+                    height={50}
+                    style={{width: "50px", height:"50px"}}
+                    priority
+                  />
+                </div>
+                <div id="child2" className="block center">
+                  Quizzing
+                </div>
+              </div>
             </Link>
             {/* <Button variant="default" asChild>
               <a href="/">Get Started</a>

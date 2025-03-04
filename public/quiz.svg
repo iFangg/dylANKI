@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 403.48 403.48" xml:space="preserve">
-<g>
-	<path d="M277.271,0H46.176v403.48h311.129V80.035L277.271,0z M281.664,25.607l50.033,50.034h-50.033V25.607z M61.176,388.48V15
-		h205.489v75.641h75.641v297.84H61.176z"/>
-	<path d="M101.439,117.58h55.18V62.4h-55.18V117.58z M116.439,77.4h25.18v25.18h-25.18V77.4z"/>
-	<path d="M101.439,192.08h55.18V136.9h-55.18V192.08z M116.439,151.9h25.18v25.18h-25.18V151.9z"/>
-	<path d="M101.439,266.581h55.18V211.4h-55.18V266.581z M116.439,226.4h25.18v25.181h-25.18V226.4z"/>
-	<path d="M101.439,341.081h55.18v-55.18h-55.18V341.081z M116.439,300.901h25.18v25.18h-25.18V300.901z"/>
-	<rect x="177.835" y="326.081" width="114.688" height="15"/>
-	<rect x="177.835" y="251.581" width="114.688" height="15"/>
-	<rect x="177.835" y="177.08" width="114.688" height="15"/>
-	<rect x="177.835" y="102.58" width="114.688" height="15"/>
-</g>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="512" height="512">
+	<title>New Project</title>
+	<defs>
+		<image width="216" height="216" id="img1" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KDTwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+Cjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8ZyAgZmlsbD0iIzQ5NGM0ZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8cGF0aCBkPSJNMTMgMEgzYTMuMDA5IDMuMDA5IDAgMCAwLTMgM3YxMy45OWEzLjAwOSAzLjAwOSAwIDAgMCAzIDNoMTBhMy4wMDkgMy4wMDkgMCAwIDAgMy0zVjNhMy4wMDkgMy4wMDkgMCAwIDAtMy0zem0xIDE2Ljk5YTEuMDE2IDEuMDE2IDAgMCAxLTEgMUgzYTEuMDE2IDEuMDE2IDAgMCAxLTEtMVYzYTEuMDE2IDEuMDE2IDAgMCAxIDEtMWgxMGMuNTQ5LjAwOS45OTEuNDUxIDEgMXYxMy45OXoiLz4KICAgICAgICA8cGF0aCBkPSJNMjAgN3YxNGEzLjAwOSAzLjAwOSAwIDAgMS0zIDNINWExIDEgMCAwIDEgMC0yaDEyYTEuMDE2IDEuMDE2IDAgMCAwIDEtMVY3YTEgMSAwIDAgMSAyIDB6Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iOCIgY3k9IjE1IiByPSIxIi8+CiAgICAgICAgPHBhdGggZD0iTTEyIDhhMy45OTIgMy45OTIgMCAwIDEtMyAzLjg3VjEyYTEgMSAwIDAgMS0yIDB2LTFhMSAxIDAgMCAxIDEtMSAyIDIgMCAxIDAtMi0yIDEgMSAwIDEgMS0yIDAgNCA0IDAgMSAxIDggMHoiLz4KICAgIDwvZz4KPC9zdmc+"/>
+	</defs>
+	<style>
+	</style>
+	<use id="quiz" href="#img1" transform="matrix(.926,0,0,.926,16,0)"/>
 </svg>

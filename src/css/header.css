@@ -26,3 +26,11 @@
 .header a:hover {
     color: rgb(255, 162, 162);
 }
+
+#parent {
+    text-align: center;
+}
+
+.center {
+    margin:auto;
+}
