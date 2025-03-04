@@ -1,16 +1,12 @@
 import Image from "next/image";
-import { TestButton } from "../components/ui/TestButton";
-import { AddFlashcardButton } from "../components/ui/AddFlashcard";
-import Navbar from "@/components/sections/navbar/default";
-import { AddDeckButton } from "@/components/ui/AddDeck";
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="main-page flex gap-8">
-          <div>Test 1</div>
-          <div>Test 2</div>
+          <section>Test 1</section>
+          <section>Test 2</section>
         </div>
         {/* <Image
           className="dark:invert"
