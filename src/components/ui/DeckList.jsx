@@ -23,16 +23,19 @@ export function DeckList() {
             Deck List
         </u>
         <ul
+        className="decks-list relative z-10 min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm focus:outline-none divide-y divide-slate-950"
         role="menu"
         data-popover="menu"
         data-popover-placement="bottom"
-        className="deck-list absolute z-10 min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-lg shadow-sm focus:outline-none divide-y divide-slate-950"
         >
-            <li>
+            <li className="p-0">
                 Deck 1
             </li>
             <li>
                 Deck 2
+            </li>
+            <li>
+                Deck 3
             </li>
         </ul>
     </div>
