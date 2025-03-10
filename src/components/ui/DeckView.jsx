@@ -2,9 +2,11 @@
 
 import "../../css/deckView.css"
 import { useState } from "react";
+import { Arrow_button } from "./arrow-button";
 
 export function DeckView() {
   const [message, setMessage] = useState('Click on either button');
+  const [deck, setDeck] = useState(null);
 
     // Inner button click handler
   const handleInnerClick = (e) => {
@@ -29,7 +31,7 @@ export function DeckView() {
         role="button"
         // tabIndex={0}
         aria-label="Outer button"
-        style={{width: "748px", height: "384px"}}
+        style={{width: "946px", height: "546px"}}
       >
         
         {/* Inner button */}
@@ -47,8 +49,10 @@ export function DeckView() {
       </div>
       
       {/* Display message about which button was clicked */}
-      <div className="text-lg font-medium">
-        {message}
+      <div className="flex text-lg font-medium gap-24">
+        <Arrow_button img="/left.svg" />
+        {/* {message} */}
+        <Arrow_button img="/right.svg" />
       </div>
     </div>
   );

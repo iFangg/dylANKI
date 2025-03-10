@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export function DeckList() {
   const [data, setData] = useState(null);
+  const [tables, setTables] = useState(null);
 
   const handleClick = async () => {
     try {
@@ -19,15 +20,17 @@ export function DeckList() {
 
   return (
     <div className="flex flex-col items-start gap-6 p-8">
-        <u>
+        <div>
             Deck List
-        </u>
+        </div>
         <ul
-        className="decks-list relative z-10 min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm focus:outline-none divide-y divide-slate-950"
+        className="decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm focus:outline-none divide-y divide-slate-950"
         role="menu"
         data-popover="menu"
         data-popover-placement="bottom"
+        style={{width: "362px", height: "546px"}}
         >
+            {/* make this a loop after website is finished (sql query to get all main decks) */}
             <li className="p-0">
                 Deck 1
             </li>
@@ -38,6 +41,9 @@ export function DeckList() {
                 Deck 3
             </li>
         </ul>
+        <div>
+            what should u put down here? 🤔
+        </div>
     </div>
   );
 }
