@@ -1,11 +1,59 @@
 "use client";
 
 import "../../css/deckList.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function DeckList() {
   const [data, setData] = useState(null);
   const [tables, setTables] = useState(null);
+//   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+//   const [activeBreakpoint, setActiveBreakpoint] = useState('');
+
+//   // Determine which breakpoint is active
+//   useEffect(() => {
+//     // Function to update width and determine breakpoint
+//     const updateWidth = () => {
+//         const width = window.innerWidth;
+//         setWindowWidth(width);
+        
+//         // Check which breakpoint is active based on Tailwind's default breakpoints
+//         if (width >= 2560) {
+//           setActiveBreakpoint('4xl');
+//         } else if (width >= 1710) {
+//         setActiveBreakpoint('3xl');
+//         } else if (width >= 1536) {
+//         setActiveBreakpoint('2xl');
+//         } else if (width >= 1280) {
+//         setActiveBreakpoint('xl');
+//         } else if (width >= 1024) {
+//         setActiveBreakpoint('lg');
+//         } else if (width >= 768) {
+//         setActiveBreakpoint('md');
+//         } else if (width >= 640) {
+//         setActiveBreakpoint('sm');
+//         } else {
+//         setActiveBreakpoint('default (xs)');
+//         }
+        
+//         console.log(`Window width: ${width}px, Active breakpoint: ${
+//         width >= 1536 ? '2xl' : 
+//         width >= 1280 ? 'xl' : 
+//         width >= 1024 ? 'lg' : 
+//         width >= 768 ? 'md' : 
+//         width >= 640 ? 'sm' : 
+//         'default (xs)'
+//         }`);
+//     };
+    
+//     // Initial call
+//     updateWidth();
+    
+//     // Add event listener
+//     window.addEventListener('resize', updateWidth);
+    
+//     // Cleanup
+//     return () => window.removeEventListener('resize', updateWidth);
+//   }, []);
 
   const handleClick = async () => {
     try {
@@ -19,7 +67,7 @@ export function DeckList() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-6 p-8">
+    <div className="flex flex-col items-start gap-6 p-8 w-auto">
         <div>
             Deck List
         </div>
@@ -41,9 +89,9 @@ export function DeckList() {
                 Deck 3
             </li>
         </ul>
-        <div>
-            what should u put down here? 🤔
-        </div>
+        {/* <div className="text-sm text-gray-600 mt-2">
+            Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
+        </div> */}
     </div>
   );
 }

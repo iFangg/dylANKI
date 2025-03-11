@@ -7,56 +7,11 @@ import { Arrow_button } from "./arrow-button";
 export function DeckView() {
   const [message, setMessage] = useState('Click on either button');
   const [deck, setDeck] = useState(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [activeBreakpoint, setActiveBreakpoint] = useState('');
-
-  // Determine which breakpoint is active
-  useEffect(() => {
-    // Function to update width and determine breakpoint
-    const updateWidth = () => {
-        const width = window.innerWidth;
-        setWindowWidth(width);
-        
-        // Check which breakpoint is active based on Tailwind's default breakpoints
-        if (width >= 1536) {
-        setActiveBreakpoint('2xl');
-        } else if (width >= 1280) {
-        setActiveBreakpoint('xl');
-        } else if (width >= 1024) {
-        setActiveBreakpoint('lg');
-        } else if (width >= 768) {
-        setActiveBreakpoint('md');
-        } else if (width >= 640) {
-        setActiveBreakpoint('sm');
-        } else {
-        setActiveBreakpoint('default (xs)');
-        }
-        
-        console.log(`Window width: ${width}px, Active breakpoint: ${
-        width >= 1536 ? '2xl' : 
-        width >= 1280 ? 'xl' : 
-        width >= 1024 ? 'lg' : 
-        width >= 768 ? 'md' : 
-        width >= 640 ? 'sm' : 
-        'default (xs)'
-        }`);
-    };
-    
-    // Initial call
-    updateWidth();
-    
-    // Add event listener
-    window.addEventListener('resize', updateWidth);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
-    /*
-    Inner button click handler
-    to change flashcard text
-    disabled for home page
-    */
+  /*
+  Inner button click handler
+  to change flashcard text
+  disabled for home page
+  */
   const handleInnerClick = () => {
     setMessage('Inner button clicked!');
   };
@@ -104,13 +59,8 @@ export function DeckView() {
           </u>
         </button>
       </div>
-
-      <div className="text-sm text-gray-600 mt-2">
-        Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
-      </div>
       
-      {/* Display message about which button was clicked */}
-      <div className="flex text-lg font-medium gap-24">
+      <div className="flex text-lg font-medium gap-24 self-center">
         <Arrow_button img="/left.svg" />
         {message}
         <Arrow_button img="/right.svg" />
