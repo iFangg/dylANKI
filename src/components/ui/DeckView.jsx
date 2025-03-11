@@ -37,7 +37,7 @@ export function DeckView() {
                 handleOuterClick();
             }
         }}
-        className="flashcard text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer"
+        className="flashcard text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
         role="button"
         tabIndex={0}
         aria-label="Outer button"

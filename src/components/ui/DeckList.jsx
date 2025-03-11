@@ -72,7 +72,7 @@ export function DeckList() {
             Deck List
         </div>
         <ul
-        className="decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm focus:outline-none divide-y divide-slate-950"
+        className="decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-xl focus:outline-none divide-y divide-slate-950"
         role="menu"
         data-popover="menu"
         data-popover-placement="bottom"
