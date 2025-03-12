@@ -2,9 +2,9 @@
 
 const { default: Image } = require("next/image");
 
-export function Arrow_button({ img }) {
+export function Arrow_button({ img, clickBehvaiour }) {
     return (
-        <button className="bg-gray-600 rounded-lg w-[50px] h-[50px] flex justify-center items-center">
+        <button onClick={clickBehvaiour} className="bg-gray-600 rounded-lg w-[50px] h-[50px] flex justify-center items-center">
             <Image
                 className="dark:invert"
                 src={img}

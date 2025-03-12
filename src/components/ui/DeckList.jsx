@@ -14,13 +14,13 @@ export function DeckList() {
         const response = await fetch("api/decks");
         const res = await response.json();
         console.log("deck list getting data: ", res);
-        return res;
+        setDecks(res);
       } catch (err) {
         console.log("Error getting Decks: ", err);
       }
     }
 
-    setDecks(getDecks)
+    getDecks();
   }, []);
 
   const [activeBreakpoint, setActiveBreakpoint] = useState('');
@@ -88,12 +88,12 @@ export function DeckList() {
         >
           {decks.length > 0 ? (
             decks.map((deck, index) => (
-              <li key={deck.id || index} className="p-0">
-                {deck.name || `Deck ${index + 1}`}
+              <li key={deck["ID"] || index} className="p-0">
+                {deck["Name"]}
               </li>
             ))
           ) : (
-            <li className="text-black-500 p-2">No decks available</li>
+            <li className="text-black-500 p-2">No decks available!</li>
           )}
           <div className="text-sm text-gray-600 mt-2">
               Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}

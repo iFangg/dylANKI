@@ -18,13 +18,13 @@ export function DeckView() {
         }
         const res = await response.json();
         console.log("Decks: ", res);
-        return res;
+        setDeck(res);
       } catch (err) {
         console.log("Error getting decks: ", err);
       }
     }
   
-    setDeck(getDecks);
+    getDecks();
   }, []);
 
   /*
@@ -43,26 +43,29 @@ export function DeckView() {
   const handleOuterClick = () => {
     setMessage('Outer button clicked!');
   };
-
-  const hasDeckView = (
-    <div>
+  // console.log(`we have ${decks.length} decks:`)
+  let hasDeckView = (<></>)
+  if (decks.length > 0) {
+    // console.log(`${JSON.stringify(decks[0]["Name"])}`);
+    hasDeckView = (
+      <div className="flex flex-col items-start gap-6 p-8 w-auto">
       <div>
-        Deck: {decks[deckIdx]}
+        Deck: {decks[deckIdx]["Name"]}
       </div>
       {/* Outer button container */}
       <div
         onClick={handleOuterClick}
         onKeyDown={(e) => {
-            if (e.key === ' ') {
-                handleOuterClick();
-            }
+          if (e.key === ' ') {
+            handleOuterClick();
+          }
         }}
         className="flashcard text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
         role="button"
         tabIndex={0}
         aria-label="Outer button"
         style={{width: "946px", height: "546px"}}
-      >
+        >
         
         {/* Inner button */}
         <button
@@ -73,7 +76,7 @@ export function DeckView() {
           className="absolute bg-red-500 hover:bg-red-600 text-white w-32 h-32 flex items-center justify-center text-lg transition-colors cursor-pointer"
           tabIndex={0}
           aria-label="Inner button"
-        >
+          >
           <u>
             Inner Button
           </u>
@@ -81,17 +84,25 @@ export function DeckView() {
       </div>
       
       <div className="flex text-lg font-medium gap-24 self-center">
-        <Arrow_button img="/left.svg" />
+        <Arrow_button img="/left.svg" clickBehvaiour={() => {
+          console.log("hey");
+        }}/>
         {message}
-        <Arrow_button img="/right.svg" />
+        <Arrow_button img="/right.svg" clickBehvaiour={() => {
+          console.log("hi there!");
+        }}/>
       </div>
     </div>
-  )
+    )
+  }
+  
 
   return (
     <>
       {decks.length > 0 ? (
-        {hasDeckView}
+        <div>
+          {hasDeckView}
+        </div>
       ) : (
         <div className="flex flex-col items-start gap-6 p-8 w-auto">
           <div>
