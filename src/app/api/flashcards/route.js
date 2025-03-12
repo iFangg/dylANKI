@@ -12,11 +12,18 @@ const pool = mariadb.createPool({
 
 console.log(`connecting to ${process.env.DB_HOSTNAME} as user ${process.env.DB_USER}`);
 
-export async function GET() {
+export async function GET(req) {
   try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('deckId');
+
+    if (!id) {
+      return Response.json({ error: "No deck ID provided" }, { status: 400 });
+    }
+
     const conn = await pool.getConnection();
-    const results = await conn.query("SHOW TABLES;");
-    console.log(results)
+    const results = await conn.query("SELECT * FROM Flashcards WHERE ID = (SELECT FlashcardID FROM CardInDeck WHERE DeckID = ?);", [id]);
+    console.log(`results are: ${results}`)
     conn.release();
     return NextResponse.json(results);
   } catch (error) {
