@@ -2,69 +2,77 @@
 
 import "../../css/deckList.css"
 import { useEffect, useState } from "react";
+import { TestButton } from "./TestButton";
 
 export function DeckList() {
-  const [data, setData] = useState(null);
-  const [tables, setTables] = useState(null);
-//   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-//   const [activeBreakpoint, setActiveBreakpoint] = useState('');
+  const [decks, setDecks] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0 instead of window.innerWidth
 
-//   // Determine which breakpoint is active
-//   useEffect(() => {
-//     // Function to update width and determine breakpoint
-//     const updateWidth = () => {
-//         const width = window.innerWidth;
-//         setWindowWidth(width);
-        
-//         // Check which breakpoint is active based on Tailwind's default breakpoints
-//         if (width >= 2560) {
-//           setActiveBreakpoint('4xl');
-//         } else if (width >= 1710) {
-//         setActiveBreakpoint('3xl');
-//         } else if (width >= 1536) {
-//         setActiveBreakpoint('2xl');
-//         } else if (width >= 1280) {
-//         setActiveBreakpoint('xl');
-//         } else if (width >= 1024) {
-//         setActiveBreakpoint('lg');
-//         } else if (width >= 768) {
-//         setActiveBreakpoint('md');
-//         } else if (width >= 640) {
-//         setActiveBreakpoint('sm');
-//         } else {
-//         setActiveBreakpoint('default (xs)');
-//         }
-        
-//         console.log(`Window width: ${width}px, Active breakpoint: ${
-//         width >= 1536 ? '2xl' : 
-//         width >= 1280 ? 'xl' : 
-//         width >= 1024 ? 'lg' : 
-//         width >= 768 ? 'md' : 
-//         width >= 640 ? 'sm' : 
-//         'default (xs)'
-//         }`);
-//     };
-    
-//     // Initial call
-//     updateWidth();
-    
-//     // Add event listener
-//     window.addEventListener('resize', updateWidth);
-    
-//     // Cleanup
-//     return () => window.removeEventListener('resize', updateWidth);
-//   }, []);
-
-  const handleClick = async () => {
-    try {
-        const response = await fetch("/api/flashcards");
+  useEffect(() => {
+    const getDecks = async () => {
+      try {
+        const response = await fetch("api/decks");
         const res = await response.json();
-        setData(data);
-        console.log(res);
-    } catch (err) {
-        console.log("Error getting flashcards: ", err);
+        console.log("deck list getting data: ", res);
+        return res;
+      } catch (err) {
+        console.log("Error getting Decks: ", err);
+      }
     }
-  };
+
+    setDecks(getDecks)
+  }, []);
+
+  const [activeBreakpoint, setActiveBreakpoint] = useState('');
+
+  // Determine which breakpoint is active
+  useEffect(() => {
+    // Function to update width and determine breakpoint
+    const updateWidth = () => {
+        const width = window.innerWidth;
+        setWindowWidth(width);
+        
+        // Check which breakpoint is active based on Tailwind's default breakpoints
+        if (width >= 1920) {
+          setActiveBreakpoint('4xl');
+        } else if (width >= 1710) {
+          setActiveBreakpoint('3xl');
+        } else if (width >= 1536) {
+          setActiveBreakpoint('2xl');
+        } else if (width >= 1280) {
+          setActiveBreakpoint('xl');
+        } else if (width >= 1024) {
+          setActiveBreakpoint('lg');
+        } else if (width >= 768) {
+          setActiveBreakpoint('md');
+        } else if (width >= 640) {
+          setActiveBreakpoint('sm');
+        } else {
+          setActiveBreakpoint('default (xs)');
+        }
+        
+        console.log(`Window width: ${width}px, Active breakpoint: ${
+        width >= 1536 ? '2xl' : 
+        width >= 1280 ? 'xl' : 
+        width >= 1024 ? 'lg' : 
+        width >= 768 ? 'md' : 
+        width >= 640 ? 'sm' : 
+        'default (xs)'
+        }`);
+    };
+    
+    // Only add the event listener client-side
+    if (typeof window !== 'undefined') {
+      // Initial call
+      updateWidth();
+      
+      // Add event listener
+      window.addEventListener('resize', updateWidth);
+      
+      // Cleanup
+      return () => window.removeEventListener('resize', updateWidth);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col items-start gap-6 p-8 w-auto">
@@ -78,20 +86,20 @@ export function DeckList() {
         data-popover-placement="bottom"
         style={{width: "362px", height: "546px"}}
         >
-            {/* make this a loop after website is finished (sql query to get all main decks) */}
-            <li className="p-0">
-                Deck 1
-            </li>
-            <li>
-                Deck 2
-            </li>
-            <li>
-                Deck 3
-            </li>
+          {decks.length > 0 ? (
+            decks.map((deck, index) => (
+              <li key={deck.id || index} className="p-0">
+                {deck.name || `Deck ${index + 1}`}
+              </li>
+            ))
+          ) : (
+            <li className="text-black-500 p-2">No decks available</li>
+          )}
+          <div className="text-sm text-gray-600 mt-2">
+              Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
+          </div>
         </ul>
-        {/* <div className="text-sm text-gray-600 mt-2">
-            Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
-        </div> */}
+        <TestButton />
     </div>
   );
 }

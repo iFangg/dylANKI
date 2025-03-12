@@ -6,7 +6,7 @@ export default function Home() {
   return (
     // change this to later fit underneath the navbar
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-start justify-center w-full h-[800px]">
+      <main className="flex flex-col gap-8 row-start-2 items-start justify-center w-full 3xl:h-[750px] 4xl:h-[800px]">
         {/* <div className="main-page flex gap-[200px] items-center ml-8 sm:ml-16"> */}
         <div className="main-page flex flex-row sm:flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16 2xl:gap-18 3xl:gap-24 4xl:gap-[200px] items-center ml-4 sm:ml-8 lg:ml-16">
           <section className="curr-Deck-view flex flex-row w-full sm:w-auto" style={{height:"750px"}}>
