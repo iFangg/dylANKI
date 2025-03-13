@@ -22,7 +22,7 @@ export async function GET(req) {
     }
 
     const conn = await pool.getConnection();
-    const results = await conn.query("SELECT * FROM Flashcards WHERE ID = (SELECT FlashcardID FROM CardInDeck WHERE DeckID = ?);", [id]);
+    const results = await conn.query("SELECT * FROM Flashcards f JOIN CardInDeck c ON f.ID = c.FlashcardID WHERE c.DeckID = ?;", [id]);
     console.log(`results are: ${results}`)
     conn.release();
     return NextResponse.json(results);

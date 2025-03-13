@@ -3,17 +3,20 @@
 import "../../css/deckView.css"
 import { useEffect, useState } from "react";
 import { Arrow_button } from "./arrow-button";
+import { CarIcon } from "lucide-react";
 
 export function DeckView() {
-  const [message, setMessage] = useState('Click on either button');
+  const [message, setMessage] = useState('we are viewing the front of the card');
   const [decks, setDecks] = useState([]);
-  const [flashcards, setCards] = useState([]);
+  const [deckIdx, setDeckIdx] = useState(0);
+  const [flashcards, setFlashcards] = useState([]);
   const [front, setFront] = useState(true);
-  const side = front ? "front" : "back";
-
-  let deckIdx = 0;
-  let cardIdx = 0;
-
+  const [side, setSide] = useState("front");
+  const [card, setCard] = useState({"front": "No flashcards in deck!", "back": "No cards in deck!"})
+  const [cardIdx, setCardIdx] = useState(0);
+  
+  const [showNoCardsAlert, setNoCardsAlert] = useState(false);
+  
   useEffect(() => {
     const getData = async () => {
       try {
@@ -37,8 +40,14 @@ export function DeckView() {
       
         response = await fetch(`/api/flashcards?deckId=${deck_id}`);
         const res = await response.json();
-        console.log(`cards in deck ${deckIdx + 1}: ${res}`);
-        setCards(res);
+        console.log(`flashcards: ${res.length}`)
+        if (res.length != 0) {
+          const content = JSON.parse(res[cardIdx]["Content"]);
+          console.log(`cards in deck ${deckIdx + 1}: ${JSON.stringify(res)}`);
+          console.log(content)
+          setFlashcards(res);
+          setCard(content);
+        }
       } catch (err) {
         console.log("Error getting flashcards from deck ", deckIdx + 1);
         console.log(err);
@@ -48,6 +57,7 @@ export function DeckView() {
     getData();
   }, []);
 
+  console.log(`flashcards found: ${flashcards.map((f) => JSON.stringify(f))}`)
   /*
   Inner button click handler
   to change flashcard text
@@ -63,20 +73,27 @@ export function DeckView() {
   */
   const handleOuterClick = () => {
     setFront(!front);
-    setMessage(`we are viewing the ${side} of the card`);
+    if (front) {
+      setSide("back");
+    } else
+      setSide("front");
+
+    setMessage(`we are NOT viewing the ${side} of the card`);
+    console.log(`should NOT be facing ${front} side`)
   };
+  
 
   let hasCards = (
-    <div className="absolute text-white w-32 h-32 flex items-center justify-center text-lg cursor-pointer">
+    <div className="text-white w-32 h-32 flex items-center justify-center text-lg cursor-pointer">
       No flashcards in deck!
     </div>
   )
+
   if (flashcards.length > 0) {
     // console.log(`flashcards: ${JSON.stringify()}`)
-    const content = JSON.parse(flashcards[cardIdx]["Content"]);
     hasCards = (
       <div className="text-white w-32 h-32 flex items-center justify-center text-lg transition-colors cursor-pointer">
-        {content[side]}
+        {card[side]}
       </div>
     )
   }
@@ -126,13 +143,67 @@ export function DeckView() {
       
       <div className="flex text-lg font-medium gap-24 self-center">
         <Arrow_button img="/left.svg" clickBehvaiour={() => {
-          console.log("hey");
+          if (flashcards.length  == 0) {
+            setNoCardsAlert(true);
+            setTimeout(() => setNoCardsAlert(false), 3000);
+          } else {
+            let idx = cardIdx- 1;
+            if (cardIdx <= 0) 
+              idx = flashcards.length - 1;
+  
+            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            setFront(true);
+            setSide("front");
+            setMessage("viewing front");
+            setCard(JSON.parse(flashcards[idx]["Content"]));
+            setCardIdx(idx);
+          }
         }}/>
+
         {message}
+
         <Arrow_button img="/right.svg" clickBehvaiour={() => {
-          console.log("hi there!");
+          if (flashcards.length  == 0) {
+            setNoCardsAlert(true);
+            setTimeout(() => setNoCardsAlert(false), 3000);
+          } else {
+            console.log(`prev idx is ${cardIdx}`)
+            let idx = cardIdx + 1;
+            if (cardIdx >= flashcards.length - 1)
+              idx = 0;
+
+            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            setFront(true);
+            setSide("front");
+            setMessage("viewing front");
+            setCard(JSON.parse(flashcards[idx]["Content"]));
+            setCardIdx(idx);
+          }
         }}/>
       </div>
+
+      {showNoCardsAlert && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1000,
+          pointerEvents: 'none' // This makes the container not block interactions
+        }}>
+          <div className="popup-alert flex p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 shadow-xl border border-red-300" 
+              role="alert"
+              style={{ pointerEvents: 'auto' }}> {/* This makes the alert itself clickable */}
+            <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span className="sr-only">Info</span>
+            <div>
+              <span className="font-medium">No Flashcards in Deck!</span> Add a flashcard and try again.
+            </div>
+          </div>
+        </div>
+      )}
     </div>
     )
   }
