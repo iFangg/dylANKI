@@ -4,6 +4,9 @@ import "../../css/deckView.css"
 import { useEffect, useState } from "react";
 import { Arrow_button } from "./arrow-button";
 import { CarIcon } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
+import { Button } from "./button";
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 
 export function DeckView() {
   const [message, setMessage] = useState('we are viewing the front of the card');
@@ -12,49 +15,64 @@ export function DeckView() {
   const [flashcards, setFlashcards] = useState([]);
   const [front, setFront] = useState(true);
   const [side, setSide] = useState("front");
-  const [card, setCard] = useState({"front": "No flashcards in deck!", "back": "No cards in deck!"})
+  const defaultCard = {"front": "No flashcards in deck!", "back": "No cards in deck!"}
+  const [card, setCard] = useState(defaultCard);
   const [cardIdx, setCardIdx] = useState(0);
-  
   const [showNoCardsAlert, setNoCardsAlert] = useState(false);
   
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        let response = await fetch("api/decks");
+  const getDecks = async () => {
+    try {
+      let response = await fetch("api/decks");
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const gotDecks = await response.json();
-        console.log("Decks: ", gotDecks);
-        setDecks(gotDecks);
-        console.log("it is set: ", decks);
-      
-        let deck_id = 0;
-
-        if (gotDecks.length > 0) {
-          console.log("there are decks.");
-          deck_id = gotDecks[deckIdx]["ID"];
-        }
-      
-        response = await fetch(`/api/flashcards?deckId=${deck_id}`);
-        const res = await response.json();
-        console.log(`flashcards: ${res.length}`)
-        if (res.length != 0) {
-          const content = JSON.parse(res[cardIdx]["Content"]);
-          console.log(`cards in deck ${deckIdx + 1}: ${JSON.stringify(res)}`);
-          console.log(content)
-          setFlashcards(res);
-          setCard(content);
-        }
-      } catch (err) {
-        console.log("Error getting flashcards from deck ", deckIdx + 1);
-        console.log(err);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const gotDecks = await response.json();
+      console.log("Decks: ", gotDecks);
+      setDecks(gotDecks);
+      console.log("it is set: ", decks);
+    
+      let deck_id = 0;
+
+      if (gotDecks.length > 0) {
+        console.log("there are decks.");
+        deck_id = gotDecks[deckIdx]["ID"];
+      }
+    
+    } catch (err) {
+      console.log("Error Decks", deckIdx + 1);
+      console.log(err);
     }
-  
-    getData();
+  }
+
+  const getFlashcards = async (idx) => {
+    try {
+      console.log("index is ", idx);
+      const response = await fetch(`/api/flashcards?deckId=${idx + 1}`);
+      const res = await response.json();
+      console.log(`flashcards: ${res.length}`);
+      if (res.length != 0) {
+        const content = JSON.parse(res[idx]["Content"]);
+        console.log(`cards in deck ${idx + 1}: ${JSON.stringify(res)}`);
+        console.log(content);
+        setFlashcards(res);
+        setCard(content);
+        setFront(true);
+        setSide("front");
+      } else {
+        setFlashcards([]);
+        setCard(defaultCard);
+      }
+    } catch (err) {
+      console.log("Error getting flashcards");
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getDecks();
+    getFlashcards(deckIdx);
   }, []);
 
   console.log(`flashcards found: ${flashcards.map((f) => JSON.stringify(f))}`)
@@ -104,9 +122,33 @@ export function DeckView() {
     // console.log(`${JSON.stringify(decks[0]["Name"])}`);
     hasDeckView = (
       <div className="flex flex-col items-start gap-6 p-8 w-auto">
-      <div>
-        Deck: {decks[deckIdx]["Name"]}
-      </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Deck: {decks[deckIdx]["Name"]}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-auto">
+            <DropdownMenuLabel>Decks</DropdownMenuLabel>
+            <DropdownMenuSeparator/>
+            <DropdownMenuGroup>
+              {decks.map((d, idx) => {
+                // console.log(`deck ${idx}, ${d}`);
+                if (idx != deckIdx) {
+                  return (
+                    <DropdownMenuItem
+                      key={idx}
+                      onSelect={() => {
+                        setDeckIdx(idx);
+                        getFlashcards(idx);
+                      }}
+                    >
+                      {d["Name"]}
+                    </DropdownMenuItem>
+                  );
+                }
+              })}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       {/* Outer button container */}
       <div
         onClick={handleOuterClick}

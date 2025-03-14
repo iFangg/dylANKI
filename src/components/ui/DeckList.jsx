@@ -99,7 +99,6 @@ export function DeckList() {
               Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
           </div>
         </ul>
-        <TestButton />
     </div>
   );
 }
