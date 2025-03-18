@@ -1,30 +1,91 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import "../../css/deckList.css"
 import { useEffect, useState } from "react";
-import { TestButton } from "./TestButton";
+import styled from "styled-components"; 
+{/* <ul
+className={`decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-xl focus:outline-none divide-y divide-black 4xl:w-[${props.width}] 4xl:h-[${props.height}]`}
+role="menu"
+data-popover="menu"
+data-popover-placement="bottom"
+style={{width: `${props.width}`, height: `${props.height}`}}
+>
+</ul> */}
 
-export function DeckList() {
+const ResponsiveList = styled.ul`
+  width: ${props => props.width};
+  height: ${props => props.height};
+  min-width: 180px;
+  overflow: auto;
+  border-radius: 0.5rem;
+  border: 1px solid #000000;
+  background-color: grey;
+  padding: 0.375rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    width: calc(100% - 20px);
+    height: auto;
+    max-height: 300px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+
+const ListItem = styled.li`
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #000000;
+  cursor: pointer;
+  transition: all 0.2s ease; /* Smooth transition for hover effects */
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  /* Hover effect */
+  &:hover {
+    background-color: #ffffff; /* Light blue-gray background on hover */
+    padding-left: 0.75rem;     /* Slight indent effect */
+    box-shadow: inset 3px 0 0 #000000; /* Left border accent */
+    color: #000000; /* Darker text on hover */
+  }
+  
+  /* Active/click effect */
+  &:active {
+    background-color: #e6f0fb;
+  }
+`;
+
+export function DeckList(props) {
   const [decks, setDecks] = useState([]);
   const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0 instead of window.innerWidth
+  const router = useRouter();
+
+  const getDecks = async () => {
+    try {
+      const response = await fetch("api/decks");
+      const res = await response.json();
+      console.log("deck list getting data: ", res);
+      setDecks(res);
+    } catch (err) {
+      console.log("Error getting Decks: ", err);
+    }
+  }
 
   useEffect(() => {
-    const getDecks = async () => {
-      try {
-        const response = await fetch("api/decks");
-        const res = await response.json();
-        console.log("deck list getting data: ", res);
-        setDecks(res);
-      } catch (err) {
-        console.log("Error getting Decks: ", err);
-      }
-    }
-
     getDecks();
   }, []);
 
-  const [activeBreakpoint, setActiveBreakpoint] = useState('');
+  const handleItemClick = (id) => {
+    router.push(`/allDecks/deck`);
+  }
 
+
+  const [activeBreakpoint, setActiveBreakpoint] = useState('');
   // Determine which breakpoint is active
   useEffect(() => {
     // Function to update width and determine breakpoint
@@ -79,18 +140,21 @@ export function DeckList() {
         <div>
             Deck List
         </div>
-        <ul
-        className="decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-xl focus:outline-none divide-y divide-slate-950"
-        role="menu"
-        data-popover="menu"
-        data-popover-placement="bottom"
-        style={{width: "362px", height: "546px"}}
+        <ResponsiveList
+          role="menu"
+          data-popover="menu"
+          data-popover-placement="bottom"
+          width={props.width}
+          height={props.height}
         >
           {decks.length > 0 ? (
             decks.map((deck, index) => (
-              <li key={deck["ID"] || index} className="p-0">
+              <ListItem
+              key={deck["ID"] || index}
+              className="p-0"
+              onClick={() => handleItemClick(deck["ID"])}>
                 {deck["Name"]}
-              </li>
+              </ListItem>
             ))
           ) : (
             <li className="text-black-500 p-2">No decks available!</li>
@@ -98,7 +162,7 @@ export function DeckList() {
           <div className="text-sm text-gray-600 mt-2">
               Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
           </div>
-        </ul>
+        </ResponsiveList>
     </div>
   );
 }

@@ -35,7 +35,7 @@ export default function Navbar() {
                   />
                 </div>
                 <div id="child2" className="block center">  
-                  Deck List
+                  All Decks
                 </div>
               </div>
             </Link>

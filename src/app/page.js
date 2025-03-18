@@ -26,7 +26,7 @@ export default function Home() {
             <DeckView />
           </section>
           <section className="deck-list flex flex-row w-full sm:w-auto">
-            <DeckList />
+            <DeckList width="362px" height="546px"/>
           </section>
         </div>
       </main>
