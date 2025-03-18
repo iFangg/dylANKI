@@ -20,7 +20,7 @@ const ResponsiveList = styled.ul`
   overflow: auto;
   border-radius: 0.5rem;
   border: 1px solid #000000;
-  background-color: grey;
+  background-color: #9c9c9c;
   padding: 0.375rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
