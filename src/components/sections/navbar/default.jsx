@@ -13,6 +13,18 @@ import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const route = useRouter();
+  const handleDecksClick = () => {
+    route.push('/allDecks');
+  }
+
+  const handleHomeClick = () => {
+    route.push("/");
+  }
+
+  const handleQuizClick = () => {
+    route.push("/quiz");
+  }
+
   return (
     <header className="sticky top-0 z-50 -mb-4 px-4 pb-4">
       {/* <div
@@ -21,7 +33,11 @@ export default function Navbar() {
         <NavbarComponent>
           <NavbarLeft>
             {/* fix hover issue (goes away after one click)*/}
-            <Link href="/allDecks" className={navigationMenuTriggerStyle()}>
+            <Link
+            href="/allDecks"
+            className={navigationMenuTriggerStyle()}
+            onClick={handleDecksClick}
+            >
               <div className="flex flex-col" id="parent">
                 <div id="child1" className="block center">
                   <Image
