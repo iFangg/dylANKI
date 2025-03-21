@@ -13,52 +13,52 @@ style={{width: `${props.width}`, height: `${props.height}`}}
 >
 </ul> */}
 
-const ResponsiveList = styled.ul`
-  width: ${props => props.width};
-  height: ${props => props.height};
-  min-width: 180px;
-  overflow: auto;
-  border-radius: 0.5rem;
-  border: 1px solid #000000;
-  background-color: #9c9c9c;
-  padding: 0.375rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+// const ResponsiveList = styled.ul`
+//   width: ${props => props.width};
+//   height: ${props => props.height};
+//   min-width: 180px;
+//   overflow: auto;
+//   border-radius: 0.5rem;
+//   border: 1px solid #000000;
+//   background-color: #9c9c9c;
+//   padding: 0.375rem;
+//   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 768px) {
-    width: calc(100% - 20px);
-    height: auto;
-    max-height: 300px;
-  }
+//   @media (max-width: 768px) {
+//     width: calc(100% - 20px);
+//     height: auto;
+//     max-height: 300px;
+//   }
   
-  @media (max-width: 480px) {
-    width: 100%;
-    height: 250px;
-  }
-`;
+//   @media (max-width: 480px) {
+//     width: 100%;
+//     height: 250px;
+//   }
+// `;
 
-const ListItem = styled.li`
-  padding: 0.75rem 0.5rem;
-  border-bottom: 1px solid #000000;
-  cursor: pointer;
-  transition: all 0.2s ease; /* Smooth transition for hover effects */
+// const ListItem = styled.li`
+//   padding: 0.75rem 0.5rem;
+//   border-bottom: 1px solid #000000;
+//   cursor: pointer;
+//   transition: all 0.2s ease; /* Smooth transition for hover effects */
   
-  &:last-child {
-    border-bottom: none;
-  }
+//   &:last-child {
+//     border-bottom: none;
+//   }
   
-  /* Hover effect */
-  &:hover {
-    background-color: #ffffff; /* Light blue-gray background on hover */
-    padding-left: 0.75rem;     /* Slight indent effect */
-    box-shadow: inset 3px 0 0 #000000; /* Left border accent */
-    color: #000000; /* Darker text on hover */
-  }
+//   /* Hover effect */
+//   &:hover {
+//     background-color: #ffffff; /* Light blue-gray background on hover */
+//     padding-left: 0.75rem;     /* Slight indent effect */
+//     box-shadow: inset 3px 0 0 #000000; /* Left border accent */
+//     color: #000000; /* Darker text on hover */
+//   }
   
-  /* Active/click effect */
-  &:active {
-    background-color: #e6f0fb;
-  }
-`;
+//   /* Active/click effect */
+//   &:active {
+//     background-color: #e6f0fb;
+//   }
+// `;
 
 export function DeckList(props) {
   const [decks, setDecks] = useState([]);
@@ -81,7 +81,7 @@ export function DeckList(props) {
   }, []);
 
   const handleItemClick = (id) => {
-    router.push(`/allDecks/deck`);
+    router.push(`/allDecks/deck?deckId=${id}`);
   }
 
 
@@ -140,21 +140,21 @@ export function DeckList(props) {
         <div>
             Deck List
         </div>
-        <ResponsiveList
+        <ul
+          className="responsive-list"
           role="menu"
           data-popover="menu"
           data-popover-placement="bottom"
-          width={props.width}
-          height={props.height}
+          style={{width: props.width, height: props.height}}
         >
           {decks.length > 0 ? (
             decks.map((deck, index) => (
-              <ListItem
+              <li
               key={deck["ID"] || index}
-              className="p-0"
+              className="list-item p-0"
               onClick={() => handleItemClick(deck["ID"])}>
                 {deck["Name"]}
-              </ListItem>
+              </li>
             ))
           ) : (
             <li className="text-black-500 p-2">No decks available!</li>
@@ -162,7 +162,7 @@ export function DeckList(props) {
           <div className="text-sm text-gray-600 mt-2">
               Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
           </div>
-        </ResponsiveList>
+        </ul>
     </div>
   );
 }

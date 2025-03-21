@@ -23,10 +23,10 @@ export default function Home() {
       <main className="flex flex-col items-start w-full max-h-[calc(100vh-159px)] px-8 sm:px-20">
         <div className="main-page flex flex-row sm:flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16 2xl:gap-18 3xl:gap-24 4xl:gap-[200px] items-center ml-4 sm:ml-8 lg:ml-16">
           <section className="curr-Deck-view flex flex-row w-full sm:w-auto">
-            <DeckView />
+            <DeckView width="946px" height="546px" />
           </section>
           <section className="deck-list flex flex-row w-full sm:w-auto">
-            <DeckList width="362px" height="546px"/>
+            <DeckList width="362px" height="546px" />
           </section>
         </div>
       </main>

@@ -3,12 +3,11 @@
 import "../../css/deckView.css"
 import { useEffect, useState } from "react";
 import { Arrow_button } from "./arrow-button";
-import { CarIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
 import { Button } from "./button";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 
-export function DeckView() {
+export function DeckView({ width, height}) {
   const [message, setMessage] = useState('we are viewing the front of the card');
   const [decks, setDecks] = useState([]);
   const [deckIdx, setDeckIdx] = useState(0);
@@ -22,7 +21,7 @@ export function DeckView() {
   
   const getDecks = async () => {
     try {
-      let response = await fetch("api/decks");
+      let response = await fetch("/api/decks");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -157,11 +156,11 @@ export function DeckView() {
             handleOuterClick();
           }
         }}
-        className="flashcard text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
+        className="responsive-deck text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
         role="button"
         tabIndex={0}
         aria-label="Outer button"
-        style={{width: "946px", height: "546px"}}
+        style={{width: width, height: height}}
         >
         
         {/* Inner button */}
@@ -269,11 +268,11 @@ export function DeckView() {
                     handleOuterClick();
                 }
             }}
-            className="flashcard text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
+            className="responsive-deck text-white font-medium rounded-lg h-64 flex justify-center items-center cursor-pointer shadow-2xl"
             role="button"
             tabIndex={0}
             aria-label="Outer button"
-            style={{width: "946px", height: "546px"}}
+            style={{width: width, height: height}}
           >
             <div>
               Make one <a href="/"><u>here</u></a>!

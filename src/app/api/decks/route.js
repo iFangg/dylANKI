@@ -16,7 +16,7 @@ export async function GET() {
   try {
     const conn = await pool.getConnection();
     const results = await conn.query("SELECT * FROM Decks;");
-    console.log(results)
+    console.log(`(in deck routes) decks found: ${results}`)
     conn.release();
     return NextResponse.json(results);
   } catch (error) {

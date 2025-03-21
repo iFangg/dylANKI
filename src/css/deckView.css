@@ -1,4 +1,25 @@
-.flashcard {
-    border: 2px solid #000000;
-    background-color: rgb(156, 156, 156);        
+.responsive-deck {
+  min-width: 180px;
+  overflow: auto;
+  border-radius: 0.5rem;
+  border: 2px solid #000000;
+  background-color: rgb(156, 156, 156);
+  padding: 0.375rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .responsive-deck {
+    width: calc(100% - 20px) !important;
+    height: auto !important;
+    max-height: 682px;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-deck {
+    width: 100% !important;
+    height: 250px !important;
+  }
 }
