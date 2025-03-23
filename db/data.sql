@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS dylanki;
-USE dyalnki;
+USE dylanki;
 
 CREATE TABLE IF NOT EXISTS dylanki.Flashcards (
 	ID INT auto_increment NOT NULL,

@@ -36,10 +36,9 @@ export async function POST(req) {
   try {
     const { action = null, deckID, name, content } = await req.json();
     const conn = await pool.getConnection();
-    const now = Date.now();
     result = await conn.query(
-      "INSERT INTO Flashcards (name, content, dateCreated, dateLastModified) VALUES (?, ?, ?, ?);",
-      [name, content, now, now]
+      "INSERT INTO Flashcards (name, content, dateCreated, dateLastModified) VALUES (?, ?, (SELECT NOW()), (SELECT NOW()));",
+      [name, content]
     );
     await conn.query(
       "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",
