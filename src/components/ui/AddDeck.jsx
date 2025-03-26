@@ -29,7 +29,7 @@ export function AddDeckButton() {
 
   return <button className="add-deck-button" onClick={handleClick}>
     <Image
-        src="plus.svg"
+        src="/plus.svg"
         width = {50}
         height = {50}
         alt="Add Deck"

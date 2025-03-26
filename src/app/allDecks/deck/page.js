@@ -1,3 +1,4 @@
+import { AddFlashcardButton } from "@/components/ui/AddFlashcard";
 import { DeckView } from "@/components/ui/DeckView";
 import Image from "next/image";
 
@@ -8,8 +9,15 @@ export default function Home() {
       <div>
         we should be looking at deck with ID UNSPECIFIED
       </div>
-      <DeckView width="946px" height="546px" />
-
+      <div className="flex items-end">
+          <div className="relative">
+            <DeckView width="946px" height="546px" />
+          </div>
+          <div className="ml-4 mb-4">
+            <AddFlashcardButton />
+          </div>
+        </div>
+      
     </div>
   );
 }

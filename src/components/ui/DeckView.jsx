@@ -2,7 +2,7 @@
 
 import "../../css/deckView.css"
 import { useEffect, useState } from "react";
-import { Arrow_button } from "./arrow-button";
+import { ArrowButton } from "./arrowButton";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
 import { Button } from "./button";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
@@ -115,6 +115,49 @@ export function DeckView({ width, height}) {
     )
   }
 
+  const card_buttons = (
+    <div className="flex text-lg font-medium gap-24 self-center">
+        <ArrowButton img="/left.svg" clickBehvaiour={() => {
+          if (flashcards.length  == 0) {
+            setNoCardsAlert(true);
+            setTimeout(() => setNoCardsAlert(false), 3000);
+          } else {
+            let idx = cardIdx- 1;
+            if (cardIdx <= 0) 
+              idx = flashcards.length - 1;
+  
+            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            setFront(true);
+            setSide("front");
+            setMessage("viewing front");
+            setCard(JSON.parse(flashcards[idx]["Content"]));
+            setCardIdx(idx);
+          }
+        }}/>
+
+        {message}
+
+        <ArrowButton img="/right.svg" clickBehvaiour={() => {
+          if (flashcards.length  == 0) {
+            setNoCardsAlert(true);
+            setTimeout(() => setNoCardsAlert(false), 3000);
+          } else {
+            console.log(`prev idx is ${cardIdx}`)
+            let idx = cardIdx + 1;
+            if (cardIdx >= flashcards.length - 1)
+              idx = 0;
+
+            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            setFront(true);
+            setSide("front");
+            setMessage("viewing front");
+            setCard(JSON.parse(flashcards[idx]["Content"]));
+            setCardIdx(idx);
+          }
+        }}/>
+      </div>
+  )
+
   // console.log(`we have ${decks.length} decks:`)
   let hasDeckView = (<></>)
   if (decks.length > 0) {
@@ -183,44 +226,7 @@ export function DeckView({ width, height}) {
       </div>
       
       <div className="flex text-lg font-medium gap-24 self-center">
-        <Arrow_button img="/left.svg" clickBehvaiour={() => {
-          if (flashcards.length  == 0) {
-            setNoCardsAlert(true);
-            setTimeout(() => setNoCardsAlert(false), 3000);
-          } else {
-            let idx = cardIdx- 1;
-            if (cardIdx <= 0) 
-              idx = flashcards.length - 1;
-  
-            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
-            setFront(true);
-            setSide("front");
-            setMessage("viewing front");
-            setCard(JSON.parse(flashcards[idx]["Content"]));
-            setCardIdx(idx);
-          }
-        }}/>
-
-        {message}
-
-        <Arrow_button img="/right.svg" clickBehvaiour={() => {
-          if (flashcards.length  == 0) {
-            setNoCardsAlert(true);
-            setTimeout(() => setNoCardsAlert(false), 3000);
-          } else {
-            console.log(`prev idx is ${cardIdx}`)
-            let idx = cardIdx + 1;
-            if (cardIdx >= flashcards.length - 1)
-              idx = 0;
-
-            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
-            setFront(true);
-            setSide("front");
-            setMessage("viewing front");
-            setCard(JSON.parse(flashcards[idx]["Content"]));
-            setCardIdx(idx);
-          }
-        }}/>
+        {card_buttons}
       </div>
 
       {showNoCardsAlert && (
@@ -277,6 +283,9 @@ export function DeckView({ width, height}) {
             <div>
               Make one <a href="/"><u>here</u></a>!
             </div>
+          </div>
+          <div className="self-center">
+            {card_buttons}
           </div>
         </div>
       )}

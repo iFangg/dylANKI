@@ -34,7 +34,7 @@ export function AddFlashcardButton() {
 
   return <button className="add-flashcard-button" onClick={handleClick}>
     <Image
-        src="plus.svg"
+        src="/plus.svg"
         width = {50}
         height = {50}
         alt="Add Flashcard"
