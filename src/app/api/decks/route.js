@@ -29,7 +29,7 @@ export async function POST(req) {
   try {
     const { action = null, deckID = null, name } = await req.json();
     const conn = await pool.getConnection();
-    result = await conn.query(
+    const result = await conn.query(
       "INSERT INTO Decks (name, dateCreated, dateLastModified) VALUES (?, (SELECT NOW()), (SELECT NOW()))",
       [name]
     );

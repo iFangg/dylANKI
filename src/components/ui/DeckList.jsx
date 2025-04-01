@@ -153,7 +153,7 @@ export function DeckList(props) {
               key={deck["ID"] || index}
               className="list-item p-0"
               onClick={() => handleItemClick(deck["ID"])}>
-                {deck["Name"]}
+                {deck["ID"]} - {deck["Name"]}
               </li>
             ))
           ) : (
