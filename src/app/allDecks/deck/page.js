@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       <div className="flex items-end">
           <div className="relative">
-            <DeckView width="946px" height="546px" />
+            <DeckView width="946px" height="546px" page="deckv" />
           </div>
           <div className="ml-4 mb-4">
             <AddFlashcardButton />

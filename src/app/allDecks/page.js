@@ -65,7 +65,7 @@ export default function allDecks() {
       <main className="row-start-2 w-full">
         <div className="flex items-end">
           <div className="relative">
-            <DeckList width="1400px" height="575px"/>
+            <DeckList width="1400px" height="575px" page="alld" />
           </div>
           <div className="ml-4">
             <Dialog>
