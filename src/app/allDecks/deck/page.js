@@ -13,9 +13,6 @@ export default function Home() {
           <div className="relative">
             <DeckView width="946px" height="546px" page="deckv" />
           </div>
-          <div className="ml-4 mb-4">
-            <AddFlashcardButton />
-          </div>
         </div>
       
     </div>

@@ -3,67 +3,30 @@
 import { useRouter } from "next/navigation";
 import "../../css/deckList.css"
 import { useEffect, useState } from "react";
-import styled from "styled-components"; 
-{/* <ul
-className={`decks-list min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-xl focus:outline-none divide-y divide-black 4xl:w-[${props.width}] 4xl:h-[${props.height}]`}
-role="menu"
-data-popover="menu"
-data-popover-placement="bottom"
-style={{width: `${props.width}`, height: `${props.height}`}}
->
-</ul> */}
-
-// const ResponsiveList = styled.ul`
-//   width: ${props => props.width};
-//   height: ${props => props.height};
-//   min-width: 180px;
-//   overflow: auto;
-//   border-radius: 0.5rem;
-//   border: 1px solid #000000;
-//   background-color: #9c9c9c;
-//   padding: 0.375rem;
-//   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-
-//   @media (max-width: 768px) {
-//     width: calc(100% - 20px);
-//     height: auto;
-//     max-height: 300px;
-//   }
-  
-//   @media (max-width: 480px) {
-//     width: 100%;
-//     height: 250px;
-//   }
-// `;
-
-// const ListItem = styled.li`
-//   padding: 0.75rem 0.5rem;
-//   border-bottom: 1px solid #000000;
-//   cursor: pointer;
-//   transition: all 0.2s ease; /* Smooth transition for hover effects */
-  
-//   &:last-child {
-//     border-bottom: none;
-//   }
-  
-//   /* Hover effect */
-//   &:hover {
-//     background-color: #ffffff; /* Light blue-gray background on hover */
-//     padding-left: 0.75rem;     /* Slight indent effect */
-//     box-shadow: inset 3px 0 0 #000000; /* Left border accent */
-//     color: #000000; /* Darker text on hover */
-//   }
-  
-//   /* Active/click effect */
-//   &:active {
-//     background-color: #e6f0fb;
-//   }
-// `;
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import Image from "next/image";
 
 export function DeckList(props) {
   const [decks, setDecks] = useState([]);
   const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0 instead of window.innerWidth
   const router = useRouter();
+
+  const [name, setName] = useState("Deck Name");
+  const [id, setId] = useState("-1");
+
+  const [tempDeckTitle, setTempDeckTitle] = useState(name);
+  const [tempDeckNo, setTempDeckNo] = useState("232");
 
   const getDecks = async () => {
     try {
@@ -84,6 +47,89 @@ export function DeckList(props) {
     router.push(`/allDecks/deck?deckId=${id}`);
   }
 
+  const handleOpenChange = (open) => {
+    if (open) {
+      setTempDeckTitle(deckTitle);
+      setTempDeckNo(deckNo);
+    }
+  };
+  
+  const addDeck = async (name, deckId = -1) => {
+    setName(tempDeckTitle);
+    setId(tempDeckNo);
+    if (deckId == -1)
+      deckId = null;
+    
+    console.log("entered deck is ", deckId)
+    try {
+      const response = await fetch(`api/decks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name, deckId}),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+          throw new Error(data.error || "Failed to add deck");
+      }
+
+      console.log(`added data successfully: ${data.message}`)
+      getDecks();
+
+      return data;
+    } catch (err) {
+      console.log(`Error adding deck: ${err}`);
+    }
+  }
+
+  let addButton = props.page == "home" ? <></> : (
+  <div className="relative">
+    <Dialog>
+      <DialogTrigger asChild>
+          <Button 
+          className="add-deck-button shadow-lgp-0 aspect-square w-16 h-16 flex items-center justify-center" 
+          variant="outline"
+          >
+            <Image
+              src={"/plus.svg"}
+              width={50}
+              height={50}
+              alt="Add Deck"
+              className="w-10 h-10"
+            />
+          </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+              <DialogTitle>Add a new deck</DialogTitle>
+              <DialogDescription>
+                Create a new deck, press add when deck details have been filled out
+              </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="Deck Title" className="text-right">
+                  Deck Title
+              </Label>
+              <Input id="name" value={tempDeckTitle} className="col-span-3" onChange={(e) => setTempDeckTitle(e.target.value)}/>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="Deck Contained In" className="text-right">
+                  Deck No.
+              </Label>
+              <Input id="name" value={tempDeckNo} className="col-span-3" onChange={(e) => setTempDeckNo(e.target.value)}/>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" onClick={() => addDeck(name, parseInt(id))}>Save changes</Button>
+          </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  </div>
+  );
 
   const [activeBreakpoint, setActiveBreakpoint] = useState('');
   // Determine which breakpoint is active
@@ -140,29 +186,32 @@ export function DeckList(props) {
         <div>
             Deck List
         </div>
-        <ul
-          className="responsive-list"
-          role="menu"
-          data-popover="menu"
-          data-popover-placement="bottom"
-          style={{width: props.width, height: props.height}}
-        >
-          {decks.length > 0 ? (
-            decks.map((deck, index) => (
-              <li
-              key={deck["ID"] || index}
-              className="list-item p-0"
-              onClick={() => handleItemClick(deck["ID"])}>
-                {deck["ID"]} - {deck["Name"]}
-              </li>
-            ))
-          ) : (
-            <li className="text-black-500 p-2">No decks available!</li>
-          )}
-          <div className="text-sm text-gray-600 mt-2">
-              Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
-          </div>
-        </ul>
+        <div className="flex flex-row items-end gap-6">
+          <ul
+            className="responsive-list"
+            role="menu"
+            data-popover="menu"
+            data-popover-placement="bottom"
+            style={{width: props.width, height: props.height}}
+          >
+            {decks.length > 0 ? (
+              decks.map((deck, index) => (
+                <li
+                key={deck["ID"] || index}
+                className="list-item p-0"
+                onClick={() => handleItemClick(deck["ID"])}>
+                  {deck["ID"]} - {deck["Name"]}
+                </li>
+              ))
+            ) : (
+              <li className="text-black-500 p-2">No decks available!</li>
+            )}
+            <div className="text-sm text-gray-600 mt-2">
+                Window width: {windowWidth}px | Active breakpoint: {activeBreakpoint}
+            </div>
+          </ul>
+          {addButton}
+        </div>
     </div>
   );
 }

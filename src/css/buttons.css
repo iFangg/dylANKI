@@ -14,10 +14,10 @@
 }
 
 .add-flashcard-button {
-  background-color: #bdbdbd;  /* Green background */
+  background-color: #ffffff;  /* Green background */
   color: black;                /* White text */
   padding: 10px 20px;          /* Padding */
-  border: none;                /* Remove border */
+  border: 1px solid black;                /* Remove border */
   border-radius: 6px;          /* Rounded corners */
   cursor: pointer;             /* Pointer cursor on hover */
   font-size: 16px;             /* Font size */
