@@ -3,7 +3,6 @@ USE dylanki;
 
 CREATE TABLE IF NOT EXISTS dylanki.Flashcards (
 	ID INT auto_increment NOT NULL,
-	Name varchar(100) NOT NULL,
 	Content LONGTEXT NULL,
 	Tags LONGTEXT NULL,
 	DateCreated DATETIME NOT NULL,

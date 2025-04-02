@@ -37,13 +37,13 @@ export async function POST(req) {
     const { action = null, deckID, name, content } = await req.json();
     const conn = await pool.getConnection();
     const result = await conn.query(
-      "INSERT INTO Flashcards (name, content, dateCreated, dateLastModified) VALUES (?, ?, (SELECT NOW()), (SELECT NOW()));",
+      "INSERT INTO Flashcards (content, dateCreated, dateLastModified) VALUES (?, (SELECT NOW()), (SELECT NOW()));",
       [name, content]
     );
     await conn.query(
       "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",
       [result.ID, deckID]
-    )
+    );
     conn.release();
     return NextResponse.json({ message: "Flashcard added" });
   } catch (error) {
