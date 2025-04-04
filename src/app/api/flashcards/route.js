@@ -35,18 +35,17 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const { action = null, deckID, content } = await req.json();
-    const name = "to delete";
     console.log(`deck id: ${deckID}, flashcard content: ${content}`)
     const conn = await pool.getConnection();
     const result = await conn.query(
-      "INSERT INTO Flashcards (Name, Content, dateCreated, dateLastModified) VALUES (?, ?, (SELECT NOW()), (SELECT NOW()));",
-      [name, content]
+      "INSERT INTO Flashcards (Content, dateCreated, dateLastModified) VALUES (?, ?, (SELECT NOW()), (SELECT NOW()));",
+      [content]
     );
     
-    const safeResult = JSON.parse(JSON.stringify(result, (key, value) => 
-        typeof value === 'bigint' ? value.toString() : value
-      ));
-    console.log("Query result:", safeResult);
+    // const safeResult = JSON.parse(JSON.stringify(result, (key, value) => 
+    //     typeof value === 'bigint' ? value.toString() : value
+    //   ));
+    // console.log("Query result:", safeResult);
 
     await conn.query(
       "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",
