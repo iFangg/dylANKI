@@ -1,20 +1,14 @@
-import { AddFlashcardButton } from "@/components/ui/AddFlashcard";
 import { DeckView } from "@/components/ui/DeckView";
-import Image from "next/image";
 
 export default function Home() {
-  console.log(process.env.PWD)
+  // console.log(process.env.PWD)
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen max-h-[calc(100vh-159px)] p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div>
-        we should be looking at deck with ID UNSPECIFIED
-      </div>
-      <div className="flex items-end">
-          <div className="relative">
-            <DeckView width="946px" height="546px" page="deckv" />
-          </div>
+    <div className="pt-[128px] flex items-center justify-center h-screen">
+      <main className="flex flex-col items-start w-full max-h-[calc(100vh-159px)] px-8 sm:px-20">
+        <div className="main-page flex flex-row sm:flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16 2xl:gap-18 3xl:gap-24 4xl:gap-[200px] items-center ml-4 sm:ml-8 lg:ml-16">
+          <DeckView width="946px" height="546px" page="deckv" />
         </div>
-      
+      </main>
     </div>
   );
 }

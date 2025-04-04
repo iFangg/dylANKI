@@ -6,13 +6,14 @@ import { ArrowButton } from "./arrowButton";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
 import { Button } from "./button";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import { AddFlashcardButton } from "./AddFlashcard";
+import { DeckPopup } from "./DeckPopup";
 
 export function DeckView({ width, height, page}) {
   const [message, setMessage] = useState('we are viewing the front of the card');
   const [decks, setDecks] = useState([]);
 
-  const [deckIdx, setDeckIdx] = useState(0);
+  const [arrayDeckIdx, setArrayDeckIdx] = useState(0);
+  const [dbDeckIdx, setDbDeckIdx] = useState(1);
   const [flashcards, setFlashcards] = useState([]);
 
   const [front, setFront] = useState(true);
@@ -35,29 +36,28 @@ export function DeckView({ width, height, page}) {
       console.log("Decks: ", gotDecks);
       setDecks(gotDecks);
       console.log("it is set: ", decks);
-    
-      let deck_id = 0;
 
       if (gotDecks.length > 0) {
         console.log("there are decks.");
-        deck_id = gotDecks[deckIdx]["ID"];
+        console.log(gotDecks[arrayDeckIdx]["ID"]);
+        setDbDeckIdx(gotDecks[arrayDeckIdx]["ID"]);
       }
-    
+      
+      return gotDecks;
     } catch (err) {
-      console.log("Error Decks", deckIdx + 1);
+      console.log("Error Decks", arrayDeckIdx + 1);
       console.log(err);
     }
   }
 
   const getFlashcards = async (idx) => {
     try {
-      console.log("index is ", idx);
-      const response = await fetch(`/api/flashcards?deckId=${idx + 1}`);
+      console.log("deck id in db is ", idx);
+      const response = await fetch(`/api/flashcards?deckId=${idx}`);
       const res = await response.json();
-      console.log(`flashcards: ${res.length}`);
+      console.log(`cards in deck ${idx}: ${JSON.stringify(res)}`);
       if (res.length != 0) {
-        const content = JSON.parse(res[idx]["Content"]);
-        console.log(`cards in deck ${idx + 1}: ${JSON.stringify(res)}`);
+        const content = JSON.parse(res[res.length - 1]["Content"]);
         console.log(content);
         setFlashcards(res);
         setCard(content);
@@ -67,6 +67,8 @@ export function DeckView({ width, height, page}) {
         setFlashcards([]);
         setCard(defaultCard);
       }
+
+      return res;
     } catch (err) {
       console.log("Error getting flashcards");
       console.log(err);
@@ -75,14 +77,21 @@ export function DeckView({ width, height, page}) {
 
   useEffect(() => {
     getDecks();
-    getFlashcards(deckIdx);
   }, []);
 
-  console.log(`flashcards found: ${flashcards.map((f) => JSON.stringify(f))}`)
+  useEffect(() => {
+    // Only run this if decks is populated
+    if (decks && decks.length > 0) {
+      console.log(`db deck index: ${dbDeckIdx}`);
+      getFlashcards(dbDeckIdx);
+    }
+  }, [decks, dbDeckIdx]);
+  
+  // console.log(`flashcards found: ${flashcards.map((f) => JSON.stringify(f))}`)
 
   const addButton = page == "home" ? <></> : (
     <div>
-      <AddFlashcardButton />
+      <DeckPopup item="flashcard" getItem={getFlashcards} curr_deckId={dbDeckIdx} />
     </div>
   );
   /*
@@ -188,7 +197,7 @@ export function DeckView({ width, height, page}) {
     <div className="flex flex-col items-start gap-6 p-8 w-auto">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">Deck: {decks[deckIdx]["Name"]}</Button>
+          <Button variant="outline">Deck: {decks[arrayDeckIdx]["Name"]}</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-auto">
           <DropdownMenuLabel>Decks</DropdownMenuLabel>
@@ -196,13 +205,13 @@ export function DeckView({ width, height, page}) {
           <DropdownMenuGroup>
             {decks.map((d, idx) => {
               // console.log(`deck ${idx}, ${d}`);
-              if (idx != deckIdx) {
+              if (idx != arrayDeckIdx) {
                 return (
                   <DropdownMenuItem
                     key={idx}
                     onSelect={() => {
-                      setDeckIdx(idx);
-                      getFlashcards(idx);
+                      setArrayDeckIdx(idx);
+                      getFlashcards(decks[idx]["ID"]);
                     }}
                   >
                     {d["Name"]}
@@ -292,7 +301,7 @@ export function DeckView({ width, height, page}) {
             style={{width: width, height: height}}
           >
             <div>
-              Make one <a href="/"><u>here</u></a>!
+              Make one <a href="/allDecks"><u>here</u></a>!
             </div>
           </div>
           <div className="self-center">
