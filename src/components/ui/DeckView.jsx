@@ -150,6 +150,7 @@ export function DeckView({ width, height, page}) {
   );
 
   const card_buttons = (
+    // fix mis-indexing after adding a card
     <div className="flex text-lg font-medium gap-24 self-center">
         <ArrowButton img="/left.svg" clickBehvaiour={() => {
           if (flashcards.length  == 0) {
@@ -246,7 +247,7 @@ export function DeckView({ width, height, page}) {
       </div>
     </div>
     
-    <div className="flex text-lg font-medium gap-24 self-center">
+    <div className="flex text-lg font-medium gap-24 self-center justify-center">
       {card_buttons}
     </div>
 

@@ -23,7 +23,7 @@ export async function GET(req) {
 
     const conn = await pool.getConnection();
     const results = await conn.query("SELECT * FROM Flashcards f JOIN CardInDeck c ON f.ID = c.FlashcardID WHERE c.DeckID = ?;", [id]);
-    console.log(`results are: ${results}`)
+    // console.log(`results are: ${results}`)
     conn.release();
     return NextResponse.json(results);
   } catch (error) {
@@ -35,10 +35,10 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const { action = null, deckID, content } = await req.json();
-    console.log(`deck id: ${deckID}, flashcard content: ${content}`)
+    // console.log(`deck id: ${deckID}, flashcard content: ${content}`)
     const conn = await pool.getConnection();
     const result = await conn.query(
-      "INSERT INTO Flashcards (Content, dateCreated, dateLastModified) VALUES (?, ?, (SELECT NOW()), (SELECT NOW()));",
+      "INSERT INTO Flashcards (Content, dateCreated, dateLastModified) VALUES (?, (SELECT NOW()), (SELECT NOW()));",
       [content]
     );
     
@@ -60,6 +60,7 @@ export async function POST(req) {
   }
 }
 
+// TODO: Implement
 export async function UPDATE(req) {
   try {
     const { flashcardID, name, content } = await req.json();
@@ -76,6 +77,7 @@ export async function UPDATE(req) {
   }
 }
 
+// TODO: Implement
 export async function DELETE(req) {
   try {
     const { flashcardID } = await req.json();

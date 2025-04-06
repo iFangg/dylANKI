@@ -47,6 +47,7 @@ export async function POST(req) {
   }
 }
 
+// TODO: IMPLEMENT
 export async function UPDATE(req) {
   try {
     const { deckID, name } = await req.json();
@@ -63,6 +64,7 @@ export async function UPDATE(req) {
   }
 }
 
+// TODO: Implement
 export async function DELETE(req) {
   try {
     const { deckID } = await req.json();
