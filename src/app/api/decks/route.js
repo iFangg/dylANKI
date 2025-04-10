@@ -49,11 +49,7 @@ export async function POST(req) {
   }
 }
 
-<<<<<<< HEAD
 // TODO: IMPLEMENT
-=======
-// TODO: Implement
->>>>>>> 042c23d2 (Styling changes)
 export async function UPDATE(req) {
   try {
     const { deckID, name } = await req.json();

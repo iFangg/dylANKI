@@ -24,10 +24,6 @@ export async function GET(req) {
     const conn = await pool.getConnection();
     const results = await conn.query("SELECT * FROM Flashcards f JOIN CardInDeck c ON f.ID = c.FlashcardID WHERE c.DeckID = ?;", [id]);
     // console.log(`results are: ${results}`)
-<<<<<<< HEAD
-=======
-
->>>>>>> 042c23d2 (Styling changes)
     conn.release();
     return NextResponse.json(results);
   } catch (error) {
@@ -38,25 +34,12 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-<<<<<<< HEAD
-    const { action = null, deckID, content } = await req.json();
-    // console.log(`deck id: ${deckID}, flashcard content: ${content}`)
-=======
     const { deckID, name, content } = await req.json();
->>>>>>> 042c23d2 (Styling changes)
     const conn = await pool.getConnection();
     const result = await conn.query(
       "INSERT INTO Flashcards (Content, dateCreated, dateLastModified) VALUES (?, (SELECT NOW()), (SELECT NOW()));",
       [content]
     );
-<<<<<<< HEAD
-    
-    // const safeResult = JSON.parse(JSON.stringify(result, (key, value) => 
-    //     typeof value === 'bigint' ? value.toString() : value
-    //   ));
-    // console.log("Query result:", safeResult);
-=======
->>>>>>> 042c23d2 (Styling changes)
 
     await conn.query(
       "INSERT INTO CardInDeck (FlashcardID, DeckID) VALUES (?, ?);",
