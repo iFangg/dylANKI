@@ -106,13 +106,13 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
     <div className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
         <Label htmlFor="Deck Title" className="text-right">
-            Deck Title
+          Deck Title
         </Label>
         <Input id="name" placeholder="Deck Name" className="col-span-3" onChange={e => setName(e.target.value)} />
       </div>
       <div className="grid grid-cols-4 items-center gap-4">
         <Label htmlFor="Deck Contained In" className="text-right">
-            Deck No.
+          Deck No.
         </Label>
         <Input id="name" placeholder="232" className="col-span-3" onChange={e => setId(e.target.value)} />
       </div>
@@ -121,13 +121,13 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
     <div className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
         <Label htmlFor="Front Text" className="text-right">
-            Front Content
+          Front Content
         </Label>
         <Input id="name" placeholder="Front Text" className="col-span-3" onChange={e => setFront(e.target.value)} />
       </div>
       <div className="grid grid-cols-4 items-center gap-4">
         <Label htmlFor="Back Text" className="text-right">
-            Back Content
+          Back Content
         </Label>
         <Input id="name" placeholder="Front Text" className="col-span-3" onChange={e => setBack(e.target.value)} />
       </div>
@@ -137,30 +137,30 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-          <Button
-          className="add-deck-button shadow-lgp-0 aspect-square w-16 h-16 flex items-center justify-center" 
-          variant="outline"
-          >
-            <Image
-              src={"/plus.svg"}
-              width={50}
-              height={50}
-              alt="Add Deck"
-              className="w-10 h-10"
-            />
-          </Button>
+        <Button
+        className="add-deck-button shadow-lgp-0 aspect-square w-16 h-16 flex items-center justify-center" 
+        variant="outline"
+        >
+          <Image
+            src={"/plus.svg"}
+            width={50}
+            height={50}
+            alt="Add Deck"
+            className="w-10 h-10"
+          />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add a new deck</DialogTitle>
-            <DialogDescription>
-              Create a new deck, press add when deck details have been filled out
-            </DialogDescription>
-          </DialogHeader>
-          {formText}
-          <DialogFooter>
-            {itemButton}
-          </DialogFooter>
+        <DialogHeader>
+          <DialogTitle>Add a new deck</DialogTitle>
+          <DialogDescription>
+            Create a new deck, press add when deck details have been filled out
+          </DialogDescription>
+        </DialogHeader>
+        {formText}
+        <DialogFooter>
+          {itemButton}
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

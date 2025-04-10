@@ -33,13 +33,13 @@ export function DeckView({ width, height, page}) {
       }
 
       const gotDecks = await response.json();
-      console.log("Decks: ", gotDecks);
+      // console.log("Decks: ", gotDecks);
       setDecks(gotDecks);
-      console.log("it is set: ", decks);
+      // console.log("it is set: ", decks);
 
       if (gotDecks.length > 0) {
-        console.log("there are decks.");
-        console.log(gotDecks[arrayDeckIdx]["ID"]);
+        // console.log("there are decks.");
+        // console.log(gotDecks[arrayDeckIdx]["ID"]);
         setDbDeckIdx(gotDecks[arrayDeckIdx]["ID"]);
       }
       
@@ -52,13 +52,13 @@ export function DeckView({ width, height, page}) {
 
   const getFlashcards = async (idx) => {
     try {
-      console.log("deck id in db is ", idx);
+      // console.log("deck id in db is ", idx);
       const response = await fetch(`/api/flashcards?deckId=${idx}`);
       const res = await response.json();
-      console.log(`cards in deck ${idx}: ${JSON.stringify(res)}`);
+      // console.log(`cards in deck ${idx}: ${JSON.stringify(res)}`);
       if (res.length != 0) {
         const content = JSON.parse(res[res.length - 1]["Content"]);
-        console.log(content);
+        // console.log(content);
         setFlashcards(res);
         setCard(content);
         setFront(true);
@@ -82,7 +82,7 @@ export function DeckView({ width, height, page}) {
   useEffect(() => {
     // Only run this if decks is populated
     if (decks && decks.length > 0) {
-      console.log(`db deck index: ${dbDeckIdx}`);
+      // console.log(`db deck index: ${dbDeckIdx}`);
       getFlashcards(dbDeckIdx);
     }
   }, [decks, dbDeckIdx]);
@@ -95,6 +95,7 @@ export function DeckView({ width, height, page}) {
     </div>
   );
   /*
+  TODO: IMPLEMENT text change
   Inner button click handler
   to change flashcard text
   disabled for home page
@@ -115,7 +116,7 @@ export function DeckView({ width, height, page}) {
       setSide("front");
 
     setMessage(`we are NOT viewing the ${side} of the card`);
-    console.log(`should NOT be facing ${front} side`)
+    // console.log(`should NOT be facing ${front} side`)
   };
   
   const innerButton = page == "deckv" ? (
@@ -161,7 +162,7 @@ export function DeckView({ width, height, page}) {
             if (cardIdx <= 0) 
               idx = flashcards.length - 1;
   
-            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            // console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
             setFront(true);
             setSide("front");
             setMessage("viewing front");
@@ -182,7 +183,7 @@ export function DeckView({ width, height, page}) {
             if (cardIdx >= flashcards.length - 1)
               idx = 0;
 
-            console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
+            // console.log(`new card is ${flashcards[idx]["Content"]}, idx ${idx}`)
             setFront(true);
             setSide("front");
             setMessage("viewing front");

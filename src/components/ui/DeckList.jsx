@@ -3,19 +3,6 @@
 import "../../css/deckList.css"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Image from "next/image";
 import { DeckPopup } from "./DeckPopup";
 
 export function DeckList(props) {
@@ -101,7 +88,7 @@ export function DeckList(props) {
   return (
     <div className="flex flex-col items-start gap-6 p-8 w-auto">
         <div>
-            Deck List
+          Deck List
         </div>
         <div className="flex flex-row items-end gap-6">
           <ul
