@@ -9,8 +9,9 @@
   }
 }
 
+/* change margin to 159px to fit underneath navbar */
 main {
-    margin-top: 10px;
+  margin-top: 0px;
 }
 
 img {

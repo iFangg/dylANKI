@@ -32,7 +32,6 @@ export default function Navbar() {
       <div className="relative mx-auto max-w-container">
         <NavbarComponent>
           <NavbarLeft>
-            {/* fix hover issue (goes away after one click)*/}
             <Link
             href="/allDecks"
             className={navigationMenuTriggerStyle()}
@@ -57,7 +56,11 @@ export default function Navbar() {
             </Link>
           </NavbarLeft>
           <NavbarCenter>
-            <Link href="/" className={navigationMenuTriggerStyle()}>
+            <Link
+            href="/"
+            className={navigationMenuTriggerStyle()}
+            onClick={handleHomeClick}
+            >
               <div className="flex flex-col" id="parent">
                 <div id="child1" className="flex flex-col center">
                   <Image
@@ -77,7 +80,11 @@ export default function Navbar() {
             </Link>
          </NavbarCenter>
           <NavbarRight>
-            <Link href="/quiz" className={navigationMenuTriggerStyle()}>
+            <Link
+            href="/quiz"
+            className={navigationMenuTriggerStyle()}
+            onClick={handleQuizClick}
+            >
               <div className="flex flex-col" id="parent">
                 <div id = "child1" className="flex flex-col center">
                   <Image

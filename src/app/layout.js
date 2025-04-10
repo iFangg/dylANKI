@@ -20,6 +20,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // change this to later fit underneath the navbar
   return (
     <html lang="en" className="hydrated">
       <body
@@ -31,9 +32,9 @@ export default function RootLayout({ children }) {
             <Navbar className="w-full"/>
           </div>
         </header>
-        <div>
+        <main>
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );

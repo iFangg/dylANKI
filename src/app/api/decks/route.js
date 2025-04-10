@@ -27,18 +27,20 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { action = null, deckID = null, name } = await req.json();
+    const { deckID = null, name } = await req.json();
     const conn = await pool.getConnection();
     const result = await conn.query(
       "INSERT INTO Decks (name, dateCreated, dateLastModified) VALUES (?, (SELECT NOW()), (SELECT NOW()))",
       [name]
     );
+
     if (deckID != null) {
         await conn.query(
             "INSERT INTO DeckInDeck (DeckID, SuperDeckID) VALUES (?, ?)",
             [result.ID, deckID]
         );
     }
+
     conn.release();
     return NextResponse.json({ message: "Deck added" });
   } catch (error) {
@@ -47,7 +49,11 @@ export async function POST(req) {
   }
 }
 
+<<<<<<< HEAD
 // TODO: IMPLEMENT
+=======
+// TODO: Implement
+>>>>>>> 042c23d2 (Styling changes)
 export async function UPDATE(req) {
   try {
     const { deckID, name } = await req.json();
@@ -56,6 +62,7 @@ export async function UPDATE(req) {
       "UPDATE Decks SET Name = ? WHERE ID = ?;",
       [name, deckID]
     );
+
     conn.release();
     return NextResponse.json({ message: "Deck updated" });
   } catch (error) {
@@ -69,24 +76,27 @@ export async function DELETE(req) {
   try {
     const { deckID } = await req.json();
     const conn = await pool.getConnection();
-    result = await conn.query(
-      "DELETE FROM Decks WHERE ID = ?;",
-      [deckID]
-    );
-
-    cardDeletion = await conn.query(
+    
+    await conn.query(
       "DELETE FROM CardInDeck WHERE DeckID = ?;",
       [deckID]
     );
-
-    deckUpdates = await conn.query(
-        "UPDATE DeckInDeck SET DeckID = (SELECT DeckID FROM DeckInDeck WHERE SuperDeckID = ?) WHERE DeckID = ?",
-        [deckID, deckID]
+    
+    await conn.query(
+      "UPDATE DeckInDeck SET DeckID = (SELECT DeckID FROM DeckInDeck WHERE SuperDeckID = ?) WHERE DeckID = ?",
+      [deckID, deckID]
     );
-
-    deckDeletion = await conn.query(
-        "DELETE FROM DeckInDeck WHERE SuperDeckID = ?;"
+    
+    await conn.query(
+      "DELETE FROM DeckInDeck WHERE SuperDeckID = ?;"
     );
+    
+    await conn.query(
+    "DELETE FROM Decks WHERE ID = ?;",
+      [deckID]
+    );
+    
+    return result;
   } catch (error) {
     console.error("Deck deletion error: ", error);
     return NextResponse.json({ error: "Deck deletion failed" }, { status: 500 });
