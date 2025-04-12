@@ -16,7 +16,7 @@ export async function GET() {
   try {
     const conn = await pool.getConnection();
     const results = await conn.query("SELECT * FROM Decks;");
-    console.log(`(in deck routes) decks found: ${results}`)
+    // console.log(`(in deck routes) decks found: ${results}`)
     conn.release();
     return NextResponse.json(results);
   } catch (error) {
@@ -34,6 +34,7 @@ export async function POST(req) {
       [name]
     );
 
+    // bug found where deck was not being inserted
     if (deckID != null) {
         await conn.query(
             "INSERT INTO DeckInDeck (DeckID, SuperDeckID) VALUES (?, ?)",
@@ -67,11 +68,11 @@ export async function UPDATE(req) {
   }
 }
 
-// TODO: Implement
 export async function DELETE(req) {
   try {
     const { deckID } = await req.json();
     const conn = await pool.getConnection();
+    console.log(`provided ID was ${deckID}`)
     
     await conn.query(
       "DELETE FROM CardInDeck WHERE DeckID = ?;",
@@ -84,7 +85,8 @@ export async function DELETE(req) {
     );
     
     await conn.query(
-      "DELETE FROM DeckInDeck WHERE SuperDeckID = ?;"
+      "DELETE FROM DeckInDeck WHERE SuperDeckID = ?;",
+      [deckID]
     );
     
     await conn.query(
@@ -92,7 +94,7 @@ export async function DELETE(req) {
       [deckID]
     );
     
-    return result;
+    return NextResponse.json({ message: "Deck deleted" });
   } catch (error) {
     console.error("Deck deletion error: ", error);
     return NextResponse.json({ error: "Deck deletion failed" }, { status: 500 });

@@ -1,19 +1,4 @@
-.test-button {
-  background-color: #4CAF50;  /* Green background */
-  color: white;                /* White text */
-  padding: 10px 20px;          /* Padding */
-  border: none;                /* Remove border */
-  border-radius: 6px;          /* Rounded corners */
-  cursor: pointer;             /* Pointer cursor on hover */
-  font-size: 16px;             /* Font size */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
-}
-
-.test-button:hover {
-  background-color: #45a049;  /* Darker green on hover */
-}
-
-.add-flashcard-button {
+.add-item-button {
   background-color: #ffffff;  /* Green background */
   color: black;                /* White text */
   padding: 10px 20px;          /* Padding */
@@ -24,13 +9,13 @@
   transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
-.add-deck-button {
-    background-color: #ffffff;
-    color: black;
-    padding: 10px 20px;
-    border: 1px solid black;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+.remove-item-button {
+  background-color: #ffffff;  /* Green background */
+  color: black;                /* White text */
+  padding: 10px 20px;          /* Padding */
+  border: 1px solid black;                /* Remove border */
+  border-radius: 6px;          /* Rounded corners */
+  cursor: pointer;             /* Pointer cursor on hover */
+  font-size: 16px;             /* Font size */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
 }

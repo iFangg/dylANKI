@@ -72,14 +72,13 @@ export async function UPDATE(req) {
   }
 }
 
-// TODO: Implement
 export async function DELETE(req) {
   try {
     const { flashcardID } = await req.json();
     const conn = await pool.getConnection();
-    
-    const result = await conn.query(
-      "DELETE FROM Decks WHERE ID = (SELECT ID FROM Flashcards WHERE ID = ?);",
+
+    await conn.query(
+      "DELETE FROM CardInDeck WHERE FlashcardID = ?;",
       [flashcardID]
     );
 
@@ -88,7 +87,7 @@ export async function DELETE(req) {
       [flashcardID]
     );
 
-    return result;
+    return NextResponse.json({ message: "Flashcard deleted" });
   } catch (error) {
     console.error("Flashcard delete error: ", error);
     return NextResponse.json({ error: "Flashcard deletion failed" }, { status: 500 });

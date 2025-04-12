@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -24,7 +24,7 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
   const [back, setBack] = useState("");
   const [content, setContent] = useState({"front": front, "back": back});
   
-  const addItem = item == "deck" ? async (name, deckId = -1) => {
+  const addItem = item == "deck" ? async (deckId = -1, name) => {
     setOpen(false);
     if (name == "")
       return;
@@ -42,7 +42,7 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({name, deckId}),
+        body: JSON.stringify({deckId, name}),
       });
 
       const data = await response.json();
@@ -97,7 +97,7 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
   };
 
   const itemButton = item == "deck" ? (
-    <Button type="submit" onClick={() => addItem(name, parseInt(id))}>Save changes</Button>
+    <Button type="submit" onClick={() => addItem(parseInt(id), name)}>Save changes</Button>
   ) : (
     <Button type="submit" onClick={() => addItem(curr_deckId)}>Save changes</Button>
   );
@@ -138,7 +138,7 @@ export function DeckPopup({ item, getItem, curr_deckId }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-        className="add-deck-button shadow-lgp-0 aspect-square w-16 h-16 flex items-center justify-center" 
+        className="add-item-button shadow-lgp-0 aspect-square w-16 h-16 flex items-center justify-center" 
         variant="outline"
         >
           <Image

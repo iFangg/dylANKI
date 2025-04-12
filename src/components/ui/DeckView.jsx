@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Button } from "./button";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import { DeckPopup } from "./DeckPopup";
+import { DeleteButton } from "./DeleteItem"
 
 export function DeckView({ width, height, page}) {
   const [message, setMessage] = useState('we are viewing the front of the card');
@@ -15,6 +16,7 @@ export function DeckView({ width, height, page}) {
   const [arrayDeckIdx, setArrayDeckIdx] = useState(0);
   const [dbDeckIdx, setDbDeckIdx] = useState(1);
   const [flashcards, setFlashcards] = useState([]);
+  const [cardId, setCardId] = useState(1);
 
   const [front, setFront] = useState(true);
   const [side, setSide] = useState("front");
@@ -59,6 +61,7 @@ export function DeckView({ width, height, page}) {
       if (res.length != 0) {
         const content = JSON.parse(res[res.length - 1]["Content"]);
         // console.log(content);
+        setCardId(res[res.length - 1]["ID"]);
         setFlashcards(res);
         setCard(content);
         setFront(true);
@@ -90,8 +93,9 @@ export function DeckView({ width, height, page}) {
   // console.log(`flashcards found: ${flashcards.map((f) => JSON.stringify(f))}`)
 
   const addButton = page == "home" ? <></> : (
-    <div>
+    <div className="flex flex-col gap-4">
       <DeckPopup item="flashcard" getItem={getFlashcards} curr_deckId={dbDeckIdx} />
+      <DeleteButton item="flashcard" getItem={getFlashcards} curr_itemId={cardId} />
     </div>
   );
   /*
@@ -152,7 +156,8 @@ export function DeckView({ width, height, page}) {
 
   const card_buttons = (
     // fix mis-indexing after adding a card
-    <div className="flex text-lg font-medium gap-24 self-center">
+    // fix first click doesn't do anything
+    <div className="flex text-lg font-medium gap-[200px] self-center ">
         <ArrowButton img="/left.svg" clickBehvaiour={() => {
           if (flashcards.length  == 0) {
             setNoCardsAlert(true);
@@ -168,17 +173,18 @@ export function DeckView({ width, height, page}) {
             setMessage("viewing front");
             setCard(JSON.parse(flashcards[idx]["Content"]));
             setCardIdx(idx);
+            setCardId(flashcards[idx]["ID"]);
           }
         }}/>
 
-        {message}
+        {/* {message} */}
 
         <ArrowButton img="/right.svg" clickBehvaiour={() => {
           if (flashcards.length  == 0) {
             setNoCardsAlert(true);
             setTimeout(() => setNoCardsAlert(false), 3000);
           } else {
-            console.log(`prev idx is ${cardIdx}`)
+            // console.log(`prev idx is ${cardIdx}`)
             let idx = cardIdx + 1;
             if (cardIdx >= flashcards.length - 1)
               idx = 0;
@@ -189,6 +195,7 @@ export function DeckView({ width, height, page}) {
             setMessage("viewing front");
             setCard(JSON.parse(flashcards[idx]["Content"]));
             setCardIdx(idx);
+            setCardId(flashcards[idx]["ID"]);
           }
         }}/>
       </div>

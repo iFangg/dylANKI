@@ -4,6 +4,7 @@ import "../../css/deckList.css"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DeckPopup } from "./DeckPopup";
+import { DeleteButton } from "./DeleteItem";
 
 export function DeckList(props) {
   const [decks, setDecks] = useState([]);
@@ -14,7 +15,7 @@ export function DeckList(props) {
     try {
       const response = await fetch("/api/decks");
       const res = await response.json();
-      console.log("deck list getting data: ", res);
+      // console.log("deck list getting data: ", res);
       setDecks(res);
     } catch (err) {
       console.log("Error getting Decks: ", err);
@@ -30,8 +31,9 @@ export function DeckList(props) {
   }
 
   let addButton = props.page == "home" ? <></> : (
-  <div className="relative">
+  <div className="flex flex-col relative gap-4">
     <DeckPopup item="deck" getItem={getDecks} />
+    <DeleteButton item="deck" getItem={getDecks} />
   </div>
   );
 
